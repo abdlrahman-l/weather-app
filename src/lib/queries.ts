@@ -1,6 +1,6 @@
 import { weatherBaseUrl } from "@/constant/env";
 
-import { ProvinceList, ProvinceWeather } from "./types";
+import { FormattedArea, ProvinceList, ProvinceWeather } from "./types";
 
 export const getProvinceList = async (): Promise<ProvinceList | null> => {
     try {
@@ -38,7 +38,6 @@ export const getProvinceList = async (): Promise<ProvinceList | null> => {
             throw new Error('Data not found!')
         }
 
-        console.log('manggil', JSON.stringify(data, null, 2))
         return provinceListData
     } catch (error) {
         console.error(error)
@@ -47,7 +46,7 @@ export const getProvinceList = async (): Promise<ProvinceList | null> => {
 }
 
 
-export const getProvinceWeather = async (provinceId: string): Promise<ProvinceWeather | null> => {
+export const getProvinceWeather = async (provinceId: string): Promise<{ provinceWeatherData: ProvinceWeather; formattedData: FormattedArea[] } | null> => {
     try {
         const response = await fetch(weatherBaseUrl, {
             method: 'POST',
@@ -110,7 +109,22 @@ export const getProvinceWeather = async (provinceId: string): Promise<ProvinceWe
             throw new Error('Data not found!')
         }
 
-        return provinceWeatherData
+        const areaList = provinceWeatherData.data.weather.data.forecast.area
+        const formattedData = [...areaList].map<FormattedArea>(a => ({
+            ...a,
+            paramObj: {
+                humidity: a.parameter[0],
+                maxHumidity: a.parameter[1],
+                maxTemperature: a.parameter[2],
+                minHumidity: a.parameter[3],
+                minTemperature: a.parameter[4],
+                temperature: a.parameter[5],
+                weather: a.parameter[6],
+                windDirection: a.parameter[7],
+            }
+        }))
+
+        return { provinceWeatherData, formattedData }
     } catch (error) {
         console.error(error)
         return null

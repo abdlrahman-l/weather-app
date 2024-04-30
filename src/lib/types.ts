@@ -84,3 +84,7 @@ export type FormattedParameter = {
     weather: Parameter,
     windDirection: Parameter,
 }
+
+export type FormattedArea = Area & {
+    paramObj: FormattedParameter
+}

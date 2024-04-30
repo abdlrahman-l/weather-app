@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getProvinceList, getProvinceWeather } from "@/lib/queries";
-import { Area, FormattedParameter } from "@/lib/types";
+
 
 export async function generateStaticParams() {
     const provinceList = await getProvinceList();
@@ -13,46 +14,34 @@ export async function generateStaticParams() {
     }))
 }
 
-type FormattedArea = Area & {
-    paramObj: FormattedParameter
-}
 
 export default async function ProvincePage({ params }: { params: { province: string } }) {
     const { province } = params
 
-    const provinceWeatherData = await getProvinceWeather(province)
+    const { provinceWeatherData, formattedData } = await getProvinceWeather(province) || {}
 
     if (!provinceWeatherData) {
         notFound();
     }
 
-    const areaList = provinceWeatherData.data.weather.data.forecast.area
-    const formattedData = [...areaList].map<FormattedArea>(a => ({
-        ...a,
-        paramObj: {
-            humidity: a.parameter[0],
-            maxHumidity: a.parameter[1],
-            maxTemperature: a.parameter[2],
-            minHumidity: a.parameter[3],
-            minTemperature: a.parameter[4],
-            temperature: a.parameter[5],
-            weather: a.parameter[6],
-            windDirection: a.parameter[7],
-        }
-    }))
-
-
     return (
         <section>
             <h5>{province}</h5>
-            <div className="flex flex-col">
-                {formattedData.map(a => (
+            <div>
+                {formattedData?.map?.(a => (
                     <div key={a.id}>
-                        <h6>{`${a.description}, ${a.domain}`}</h6>
-                        <ul>
-                            <li>{a.paramObj.humidity.description}</li>
-                            <li>{a.paramObj.maxHumidity.description}</li>
-                        </ul>
+                        <h6><Link href={`/weather/${province}/${a.id}`}>{`${a.description}, ${a.domain}`}</Link></h6>
+                        {/* <p>{JSON.stringify(a.paramObj, null, 2)}</p> */}
+                        {/* <div className="grid grid-cols-6 gap-4">
+                            {
+                                a.paramObj.weather.timerange.map(t => (
+                                    <div key={t.datetime} className="shadow-lg rounded-xl grid align-items-center justify-items-center py-3 my-10">
+                                        <Weather unit={Number(t.value[0].text)} />
+                                        <h6>{}</h6>
+                                    </div>
+                                ))
+                            }
+                        </div> */}
                     </div>
                 ))}
             </div>

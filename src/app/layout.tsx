@@ -56,7 +56,13 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>{children}</body>
+      <body>
+        <div className='flex align-items-center justify-center'>
+          <div className='max-w-screen-sm w-full pt-5 px-5'>
+            {children}
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

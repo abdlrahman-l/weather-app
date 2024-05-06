@@ -61,12 +61,14 @@ interface DataWeather {
     }
 }
 
+export interface Province {
+    id: string,
+    name: string
+}
+
 interface ProvinceListData {
     provinces: {
-        data: {
-            id: string,
-            name: string
-        }[]
+        data: Province[]
     }
 }
 

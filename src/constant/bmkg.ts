@@ -14,3 +14,21 @@ export const weatherCode = {
     95: ' Hujan Petir / Severe Thunderstorm',
     97: ' Hujan Petir / Severe Thunderstorm'
 }
+
+export const weatherCodeFile = {
+    0: 'cerahPagi',
+    1: 'cerahPagiBerawan',
+    2: 'cerahMalamBerawan',
+
+    3: 'berawan',
+    4: 'berawan',
+     5: 'awanBerangin',
+    10: 'awanBerangin',
+    45: 'awanBerangin',
+    60: 'hujanSedang',
+    61: 'hujanSedang',
+    63: 'hujanPetir',
+    80: 'hujanPetirr',
+    95: 'hujanPetir',
+    97: 'hujanPetir'
+}

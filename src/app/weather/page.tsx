@@ -1,17 +1,24 @@
+
 import { getProvinceList } from "@/lib/queries";
-import Link from "next/link";
+
+import SearchLocation from "@/components/SearchLocation";
+
 
 export default async function TestPage() {
     const provinceList = await getProvinceList();
 
     if (!provinceList) return null
 
+    const provinces = provinceList.data.provinces.data
+    const defaultProvince = provinces.find(p => p.name.toLowerCase().includes('jakarta'))
+
     return (
-        <ul>
-            <p>{provinceList.data.provinces.data.length}</p>
-            {
-                provinceList.data.provinces.data?.map?.(p => <Link key={p.id} href={`/weather/${p.id}`}>{p.name}</Link>)
-            }
-        </ul>
+        <div className="flex flex-col">
+            {/* <Geolocation /> */}
+            <SearchLocation 
+                provinces={provinces}
+                defaultProvince={defaultProvince}
+            />
+        </div>
     )
 }

@@ -58,15 +58,18 @@ export default function DropdownSelect({ options, defaultOption, onSelect }: Dro
                 <Combobox.Option
                   key={option.id}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-teal-600 text-white' : 'text-gray-900'
+                    `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-teal-600 text-white' : 'bg-white  text-gray-900'
                     }`
                   }
                   value={option}
                   defaultChecked={option.id === defaultOption?.id}
                   defaultValue={defaultOption?.id}
+                  style={{
+                    zIndex: 2,
+                  }}
                 >
                   {({ selected, active }) => (
-                    <>
+                    <div>
                       <span
                         className={`block truncate ${selected ? 'font-medium' : 'font-normal'
                           }`}
@@ -81,7 +84,7 @@ export default function DropdownSelect({ options, defaultOption, onSelect }: Dro
                           <Check size={20} strokeWidth={1} />
                         </span>
                       ) : null}
-                    </>
+                    </div>
                   )}
                 </Combobox.Option>
               ))

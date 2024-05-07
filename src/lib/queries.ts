@@ -113,14 +113,14 @@ export const getProvinceWeather = async (provinceId: string): Promise<{ province
         const formattedData = [...areaList].map<FormattedArea>(a => ({
             ...a,
             paramObj: {
-                humidity: a.parameter[0],
-                maxHumidity: a.parameter[1],
-                maxTemperature: a.parameter[2],
-                minHumidity: a.parameter[3],
-                minTemperature: a.parameter[4],
-                temperature: a.parameter[5],
-                weather: a.parameter[6],
-                windDirection: a.parameter[7],
+                humidity: a.parameter?.[0],
+                maxHumidity: a.parameter?.[1],
+                maxTemperature: a.parameter?.[2],
+                minHumidity: a.parameter?.[3],
+                minTemperature: a.parameter?.[4],
+                temperature: a.parameter?.[5],
+                weather: a.parameter?.[6],
+                windDirection: a.parameter?.[7],
             }
         }))
 

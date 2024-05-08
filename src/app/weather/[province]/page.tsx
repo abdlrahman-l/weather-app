@@ -1,9 +1,12 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import { getProvinceList, getProvinceWeather } from "@/lib/queries";
 
 import SearchArea from "@/components/SearchArea";
-import SearchLocation from "@/components/SearchLocation";
+import SearchLocationSC from "@/components/ServerComponents/SearchLocationSC";
+import Skeleton from "@/components/Skeleton";
+import SearchAreaSC from "@/components/ServerComponents/SearchAreaSC";
 
 
 export async function generateStaticParams() {
@@ -20,26 +23,19 @@ export async function generateStaticParams() {
 export default async function ProvincePage({ params }: { params: { province: string } }) {
     const { province } = params
 
-    const provinceList = await getProvinceList();
-    const { formattedData } = await getProvinceWeather(province) || {}
-
-    if (!provinceList || !formattedData) {
-        notFound();
-    }
-
-    const provinces = provinceList.data.provinces.data
-    const selectedProvince = provinces.find(({ id }) => id === province)
-
     return (
         <section>
             <div className="grid gap-y-2">
-                <SearchLocation
-                    provinces={provinces}
-                    defaultProvince={selectedProvince}
-                />
-                <SearchArea
-                    areas={formattedData}
-                />
+                <Suspense fallback={
+                    <Skeleton className='h-[40px] rounded-lg w-full' />
+                }>
+                    <SearchLocationSC provinceId={province} />
+                </Suspense>
+                <Suspense fallback={
+                    <Skeleton className='h-[40px] rounded-lg w-full' />
+                }>
+                    <SearchAreaSC provinceId={province} />
+                </Suspense>
             </div>
         </section>
     )

@@ -2,12 +2,13 @@
 
 import React from 'react'
 
+import { weatherCodeFile } from '@/constant/bmkg';
+
 import LottieAnimation from '../LottieAnimation'
-import { weatherCode, weatherCodeFile } from '@/constant/bmkg';
 
 
 type WeatherProps = {
-    unit: keyof typeof  weatherCodeFile;
+    unit: keyof typeof weatherCodeFile;
 }
 
 const Weather = ({ unit }: WeatherProps) => {

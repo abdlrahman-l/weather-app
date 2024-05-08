@@ -1,24 +1,19 @@
 
-import { getProvinceList } from "@/lib/queries";
+import { Suspense } from "react";
 
-import SearchLocation from "@/components/SearchLocation";
+import SearchLocationSC from "@/components/ServerComponents/SearchLocationSC";
+import Skeleton from "@/components/Skeleton";
 
 
 export default async function TestPage() {
-    const provinceList = await getProvinceList();
-
-    if (!provinceList) return null
-
-    const provinces = provinceList.data.provinces.data
-    const defaultProvince = provinces.find(p => p.name.toLowerCase().includes('jakarta'))
-
     return (
         <div className="flex flex-col">
             {/* <Geolocation /> */}
-            <SearchLocation 
-                provinces={provinces}
-                defaultProvince={defaultProvince}
-            />
+            <Suspense fallback={
+              <Skeleton className='h-[40px] rounded-lg w-full' />
+            }>
+                <SearchLocationSC />
+            </Suspense>
         </div>
     )
 }

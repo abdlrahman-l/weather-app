@@ -1,37 +1,43 @@
 'use client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Dispatch, useEffect, useState } from 'react';
-const Animation = ({
-    lottieProps,
-    animationData,
-    onLoaded,
-}: {
-    lottieProps?: Record<string, any>;
-    animationData?: any;
-    onLoaded?: () => void;
-}) => {
-    const [Lottie, setLottie] = useState<any>();
-    useEffect(() => {
-        import('lottie-react/build/index').then((l) => setLottie(l));
-    }, []);
-    useEffect(() => {
-        if (Lottie && animationData) {
-            onLoaded?.();
-        }
-    }, [Lottie, animationData]);
-    if (!Lottie || !animationData) return <></>;
-    return <Lottie.default loop animationData={animationData} {...lottieProps} />;
-};
+import React, { Dispatch, Ref, useEffect, useState } from 'react';
+
+import Skeleton from '../Skeleton';
+
 type LottieAnimationProps = {
     importAnimation: (cb: Dispatch<any>) => void;
     lottieProps?: Record<string, any>;
     onLoaded?: () => void;
+    lottieRef?: Ref<any>; 
 };
-const LottieAnimation = ({ importAnimation, lottieProps = {}, onLoaded }: LottieAnimationProps) => {
+const LottieAnimation = ({ importAnimation, lottieProps = {}, onLoaded, lottieRef }: LottieAnimationProps) => {
     const [animationData, setAnimationData] = useState<any>();
+    const [Lottie, setLottie] = useState<any>();
+    
     useEffect(() => {
         importAnimation(setAnimationData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    return <Animation lottieProps={lottieProps} animationData={animationData} onLoaded={onLoaded} />;
+
+    useEffect(() => {
+        import('lottie-react/build/index').then((l) => setLottie(l));
+    }, []);
+
+    useEffect(() => {
+        if (Lottie && animationData) {
+            onLoaded?.();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [Lottie, animationData]);
+
+    if (!Lottie || !animationData) return (
+        <Skeleton style={{
+            height: lottieProps?.style?.height,
+            width: lottieProps?.style?.height
+        }} className='rounded-lg'/>
+    )
+    
+    return <Lottie.default ref={lottieRef} animationData={animationData} {...lottieProps} />;
 };
 export default LottieAnimation;

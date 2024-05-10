@@ -1,12 +1,10 @@
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import { getProvinceList, getProvinceWeather } from "@/lib/queries";
+import { getProvinceList } from "@/lib/queries";
 
-import SearchArea from "@/components/SearchArea";
+import SearchAreaSC from "@/components/ServerComponents/SearchAreaSC";
 import SearchLocationSC from "@/components/ServerComponents/SearchLocationSC";
 import Skeleton from "@/components/Skeleton";
-import SearchAreaSC from "@/components/ServerComponents/SearchAreaSC";
 
 
 export async function generateStaticParams() {

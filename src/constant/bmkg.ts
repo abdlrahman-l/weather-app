@@ -19,7 +19,6 @@ export const weatherCodeFile = {
     0: 'cerahPagi',
     1: 'cerahPagiBerawan',
     2: 'cerahMalamBerawan',
-
     3: 'berawan',
     4: 'berawan',
      5: 'awanBerangin',
@@ -28,7 +27,24 @@ export const weatherCodeFile = {
     60: 'hujanSedang',
     61: 'hujanSedang',
     63: 'hujanPetir',
-    80: 'hujanPetirr',
+    80: 'hujanPetir',
     95: 'hujanPetir',
     97: 'hujanPetir'
+}
+
+export const weatherColorCode = {
+    0: 'sky-400',
+    1: 'sky-200',
+    2: 'sky-950',
+    3: 'sky-100',
+    4: 'gray-500',
+     5: 'gray-500',
+    10: 'gray-500',
+    45: 'gray-500',
+    60: 'gray-400',
+    61: 'gray-400',
+    63: 'gray-500',
+    80: 'gray-500',
+    95: 'gray-500',
+    97: 'slate-800'
 }

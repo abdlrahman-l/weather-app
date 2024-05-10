@@ -21,7 +21,7 @@ interface Value {
     text: string;
 }
 
-interface Timerange {
+export interface Timerange {
     type: string;
     datetime: string;
     value: Value[];
@@ -89,4 +89,10 @@ export type FormattedParameter = {
 
 export type FormattedArea = Area & {
     paramObj: FormattedParameter
+}
+
+export type FormattedWeather = {
+    dateTime: string;
+    temperature: Value[];
+    weatherUnit: number;
 }

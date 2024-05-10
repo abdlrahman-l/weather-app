@@ -36,7 +36,7 @@ export const weatherColorCode = {
     0: 'sky-400',
     1: 'sky-200',
     2: 'sky-950',
-    3: 'sky-100',
+    3: 'sky-200',
     4: 'gray-500',
      5: 'gray-500',
     10: 'gray-500',

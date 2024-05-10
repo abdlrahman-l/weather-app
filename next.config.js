@@ -10,6 +10,16 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: '/weather',
+        destination: '/weather/Indonesia/501195',
+        permanent: true,
+      },
+    ]
+  },
 
   reactStrictMode: true,
   swcMinify: true,

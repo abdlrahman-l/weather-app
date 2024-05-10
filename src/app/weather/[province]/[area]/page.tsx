@@ -1,10 +1,10 @@
-import { notFound } from 'next/navigation'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { getProvinceWeather } from '@/lib/queries'
-import { FormattedWeather } from '@/lib/types'
 
-import DayTabs from '@/components/DayTabs'
+import SearchAreaWithDetailsSC from '@/components/ServerComponents/SearchAreaWithDetailsSC'
+import SearchLocationSC from '@/components/ServerComponents/SearchLocationSC'
+import Skeleton from '@/components/Skeleton'
 
 
 export async function generateStaticParams({
@@ -27,35 +27,20 @@ export default async function DomainDetailsPage({
 }: {
   params: { province: string; area: string }
 }) {
-
-  const { formattedData } = await getProvinceWeather(params.province) || {}
-  const area = formattedData?.find?.(d => d.id === params.area)
-
-  if (!area) {
-    notFound();
-  }
-
-  const { paramObj } = area;
-
-  const groupedTimerange = paramObj.weather.timerange.reduce<{
-    [key: string]: FormattedWeather[];
-  }>((acc, curr) => {
-    const key = curr.datetime.slice(0, 8)
-    const timeIndex = paramObj.temperature.timerange.findIndex(t => t.datetime === curr.datetime)
-    const specificTemp = paramObj.temperature.timerange[timeIndex].value;
-    return {
-      ...acc,
-      [key]: [...(acc[key] || []), {
-        dateTime: curr.datetime,
-        temperature: specificTemp,
-        weatherUnit: Number(curr.value[0].text),
-      }]
-    }
-  }, {})
-
   return (
-    <div className='flex align-items-center justify-center'>
-      <DayTabs groupedTimeRange={groupedTimerange} />
+    <div>
+      <div className="space-y-3">
+        <Suspense fallback={
+          <Skeleton className='h-[40px] rounded-lg w-full' />
+        }>
+          <SearchLocationSC provinceId={params.province} />
+        </Suspense>
+        <Suspense fallback={
+          <Skeleton className='h-[40px] rounded-lg w-full' />
+        }>
+          <SearchAreaWithDetailsSC provinceId={params.province} areaId={params.area}/>
+        </Suspense>
+      </div>
     </div>
   )
 }

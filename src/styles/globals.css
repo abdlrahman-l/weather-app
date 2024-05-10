@@ -148,3 +148,8 @@
 	background: rgb(155, 155, 155);
 	border: 2px solid transparent;
 }
+
+html {
+  font-family: var(--font-lato);
+}
+ 

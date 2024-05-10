@@ -1,11 +1,19 @@
 import { Metadata } from 'next';
 import * as React from 'react';
+import { Lato } from 'next/font/google'
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
 import { siteConfig } from '@/constant/config';
+
+const lato = Lato({
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
@@ -55,12 +63,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html className={lato.className}>
       <body>
-        <div className='flex align-items-center justify-center'>
-          <div className='max-w-screen-sm w-full pt-5 px-5'>
+        <div className='max-w-screen-sm w-full pt-5 px-5 m-auto'>
+          {/* <div className=''> */}
             {children}
-          </div>
+          {/* </div> */}
         </div>
       </body>
     </html>

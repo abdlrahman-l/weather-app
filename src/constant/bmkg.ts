@@ -32,10 +32,27 @@ export const weatherCodeFile = {
     97: 'hujanPetir'
 }
 
+export const weatherCodeNightFile = {
+    0: 'cerahMalam',
+    1: 'cerahMalamBerawan',
+    2: 'cerahMalamBerawan',
+    3: 'berawan',
+    4: 'berawan',
+     5: 'awanBerangin',
+    10: 'awanBerangin',
+    45: 'awanBerangin',
+    60: 'hujanSedangMalam',
+    61: 'hujanSedangMalam',
+    63: 'hujanPetir',
+    80: 'hujanPetir',
+    95: 'hujanPetir',
+    97: 'hujanPetir'
+}
+
 export const weatherColorCode = {
     0: 'sky-400',
     1: 'sky-200',
-    2: 'sky-950',
+    2: 'sky-800',
     3: 'sky-200',
     4: 'gray-500',
      5: 'gray-500',
@@ -48,3 +65,6 @@ export const weatherColorCode = {
     95: 'gray-500',
     97: 'slate-800'
 }
+
+export const nightColorCode = 'sky-900'
+export const eveningColorCode = 'sky-700'

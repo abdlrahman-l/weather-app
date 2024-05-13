@@ -3,9 +3,10 @@
 import clsx from 'clsx';
 import React, { useRef } from 'react'
 
+import dayjs, { isEvening, isNight } from "@/lib/date";
 import { FormattedWeather } from '@/lib/types';
 
-import { weatherCode, weatherCodeFile, weatherColorCode } from '@/constant/bmkg';
+import { eveningColorCode, nightColorCode, weatherCode, weatherCodeFile, weatherCodeNightFile, weatherColorCode } from '@/constant/bmkg';
 
 import LottieAnimation from '../LottieAnimation'
 
@@ -16,22 +17,32 @@ type WeatherProps = {
     temperature: FormattedWeather['temperature'];
 }
 
+const getBackgroundColor = ({ time, unit}: Omit<WeatherProps, 'temperature' >) => {
+    if (isEvening(time)) return eveningColorCode
+    if (isNight(time)) return  nightColorCode
+    return weatherColorCode[unit]
+}
+
 const Weather = ({ unit, time, temperature }: WeatherProps) => {
-    const bgColor = weatherColorCode[unit]?.split?.('-')
     const lottieRef = useRef<any>(null);
     const formattedTime = time.slice(8).replace(/^(\d{2})(\d{2})$/, "$1:$2")
+
+    const isNightTime = isNight(time);
+    const isEveningTime = isEvening(time);
+    const bgColor = getBackgroundColor({ time, unit })?.split?.('-')
 
     //TODO: make it dynamic with option select at Header
     const selectedUnitTemp = temperature[0]
     const formattedTemp = `${selectedUnitTemp.text} °${selectedUnitTemp.unit}`
 
     const details = weatherCode[unit]?.split('/')?.[0];
+    const lottieNameFile = (isNightTime || isEveningTime ? weatherCodeNightFile : weatherCodeFile)[unit]
 
     return (
         <div className={clsx('h-20 flex justify-between items-center shadow-lg rounded-lg p-3 cursor-pointer', `${bgColor[0]}`, `bg-primary-${bgColor[1]}`)}>
             <div className='flex flex-start items-center space-x-2'>
                 <LottieAnimation
-                    importAnimation={(cb) => import(`src/lib/lotties/${weatherCodeFile[unit]}.json`).then(cb)}
+                    importAnimation={(cb) => import(`src/lib/lotties/${lottieNameFile}.json`).then(cb)}
                     lottieProps={{
                         style: {
                             height: 60

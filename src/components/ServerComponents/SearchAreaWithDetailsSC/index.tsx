@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import dayjs from "@/lib/date";
 import { getProvinceWeather } from "@/lib/queries";
 import { FormattedWeather } from "@/lib/types";
 
@@ -30,7 +31,7 @@ export default async function SearchAreaWithDetailsSC({
     const groupedTimerange = paramObj.weather?.timerange.reduce<{
         [key: string]: FormattedWeather[];
     }>((acc, curr) => {
-        const key = curr.datetime.slice(0, 8)
+        const key = `${dayjs(curr.datetime.slice(0, 8)).format('ddd, D MMM')}`
         const timeIndex = paramObj.temperature?.timerange.findIndex(t => t.datetime === curr.datetime)
         const specificTemp = paramObj.temperature?.timerange[timeIndex].value;
         return {

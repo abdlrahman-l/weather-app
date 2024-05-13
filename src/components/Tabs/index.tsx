@@ -22,7 +22,7 @@ export default function Tabs({ tabs }: TabsProps) {
                                 key={tab.tab}
                                 className={({ selected }) =>
                                     clsx(
-                                        'rounded-[50rem] px-4 py-2 text-sm bg-primary-100 font-medium',
+                                        'rounded-md px-4 py-2 text-sm bg-primary-100 font-semibold shadow-md',
                                         selected
                                             ? 'bg-primary-800 border-transparent text-white'
                                             : 'text-sky-500'

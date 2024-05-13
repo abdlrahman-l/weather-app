@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import * as React from 'react';
 import { Lato } from 'next/font/google'
+import * as React from 'react';
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
@@ -65,10 +65,13 @@ export default function RootLayout({
   return (
     <html className={lato.className}>
       <body>
-        <div className='max-w-screen-sm w-full pt-5 px-5 m-auto'>
-          {/* <div className=''> */}
-            {children}
-          {/* </div> */}
+        <div className='max-w-md w-full pt-5 px-5 m-auto relative h-screen'>
+          {children}
+          <div className='absolute bottom-0 left-0'>
+            <span>source: &nbsp;
+                <a href="https://data.bmkg.go.id/prakiraan-cuaca/" target="_blank" className='hover:text-primary-200 underline underline-offset-1 '>BMKG</a>
+            </span>
+          </div>
         </div>
       </body>
     </html>

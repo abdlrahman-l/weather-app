@@ -6,7 +6,6 @@ import SearchAreaWithDetailsSC from '@/components/ServerComponents/SearchAreaWit
 import SearchLocationSC from '@/components/ServerComponents/SearchLocationSC'
 import Skeleton from '@/components/Skeleton'
 
-
 export async function generateStaticParams({
   params: { province },
 }: {

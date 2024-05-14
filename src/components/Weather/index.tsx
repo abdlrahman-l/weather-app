@@ -60,7 +60,14 @@ const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirec
         <>
             <div
                 onClick={openDetails}
-                className={clsx('h-20 flex justify-between items-center shadow-lg rounded-lg p-3 cursor-pointer', `${bgColor[0]}`, `bg-primary-${bgColor[1]}`)}>
+                className={
+                    clsx(
+                        'h-20 flex justify-between items-center shadow-lg rounded-lg p-3 cursor-pointer',
+                        `${bgColor[0]}`,
+                        `bg-primary-${bgColor[1]}`,
+                        'transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300'
+                    )
+                }>
                 <div className='flex flex-start items-center space-x-2'>
                     <LottieAnimation
                         importAnimation={(cb) => import(`src/lib/lotties/${lottieNameFile}.json`).then(cb)}
@@ -122,15 +129,21 @@ const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirec
                             <h6 className='font-bold'>{humidity}</h6>
                             <h6 className='font-medium'>Kelembapan</h6>
                         </div>
+                        {
+                            windDirection && (
+                                <>
+                                    <div className='border-l border-white h-24' />
+                                    <div className={clsx('p-2 flex flex-col justify-center items-center space-y-1')}>
+                                        <Compass color="#FFFFFF" />
+                                        <h6 className='font-bold'>{windDirection}</h6>
+                                        <h6 className='font-medium'>Arah Angin</h6>
+                                    </div>
+                                </>
+                            )
+                        }
                         <div className='border-l border-white h-24' />
                         <div className={clsx('p-2 flex flex-col justify-center items-center space-y-1')}>
                             <Wind color="#FFFFFF" />
-                            <h6 className='font-bold'>{windDirection}</h6>
-                            <h6 className='font-medium'>Arah Angin</h6>
-                        </div>
-                        <div className='border-l border-white h-24' />
-                        <div className={clsx('p-2 flex flex-col justify-center items-center space-y-1')}>
-                            <Compass color="#FFFFFF" />
                             <h6 className='font-bold'>{windSpeed}</h6>
                             <h6 className='font-medium'>Kec. Angin</h6>
                         </div>

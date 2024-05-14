@@ -1,10 +1,10 @@
 export const weatherCode = {
     0: ' Cerah / Clear Skies',
     1: ' Cerah Berawan / Partly Cloudy',
-        2: ' Cerah Berawan / Partly Cloudy',
+    2: ' Cerah Berawan / Partly Cloudy',
     3: ' Berawan / Mostly Cloudy',
     4: ' Berawan Tebal / Overcast',
-     5: ' Udara Kabur / Haze',
+    5: ' Udara Kabur / Haze',
     10: ' Asap / Smoke',
     45: ' Kabut / Fog',
     60: ' Hujan Ringan / Light Rain',
@@ -21,7 +21,7 @@ export const weatherCodeFile = {
     2: 'cerahMalamBerawan',
     3: 'berawan',
     4: 'berawan',
-     5: 'awanBerangin',
+    5: 'awanBerangin',
     10: 'awanBerangin',
     45: 'awanBerangin',
     60: 'hujanSedang',
@@ -38,7 +38,7 @@ export const weatherCodeNightFile = {
     2: 'cerahMalamBerawan',
     3: 'berawan',
     4: 'berawan',
-     5: 'awanBerangin',
+    5: 'awanBerangin',
     10: 'awanBerangin',
     45: 'awanBerangin',
     60: 'hujanSedangMalam',
@@ -55,7 +55,7 @@ export const weatherColorCode = {
     2: 'sky-800',
     3: 'sky-200',
     4: 'gray-500',
-     5: 'gray-500',
+    5: 'gray-500',
     10: 'gray-500',
     45: 'gray-500',
     60: 'gray-400',
@@ -68,3 +68,22 @@ export const weatherColorCode = {
 
 export const nightColorCode = 'sky-900'
 export const eveningColorCode = 'sky-700'
+
+export const windDirectionCode: Record<string, string> = {
+    "N": "Utara",
+    "NNE": "Utara-Timur Laut",
+    "NE": "Timur Laut",
+    "ENE": "Timur-Timur Laut",
+    "E": "Timur",
+    "ESE": "Timur-Tenggara",
+    "SE": "Tenggara",
+    "SSE": "Selatan-Tenggara",
+    "S": "Selatan",
+    "SSW": "Selatan-Barat Daya",
+    "SW": "Barat Daya",
+    "WSW": "Barat-Barat Daya",
+    "W": "Barat",
+    "WNW": "Barat-Barat Laut",
+    "NW": "Barat Laut",
+    "NNW": "Utara-Barat Laut"
+}

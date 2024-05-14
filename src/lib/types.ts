@@ -85,6 +85,7 @@ export type FormattedParameter = {
     temperature: Parameter,
     weather: Parameter,
     windDirection: Parameter,
+    windSpeed: Parameter,
 }
 
 export type FormattedArea = Area & {
@@ -92,7 +93,11 @@ export type FormattedArea = Area & {
 }
 
 export type FormattedWeather = {
+    date: string;
     dateTime: string;
     temperature: Value[];
     weatherUnit: number;
+    humidity: string;
+    windSpeed: string;
+    windDirection: string;
 }

@@ -121,6 +121,7 @@ export const getProvinceWeather = async (provinceId: string): Promise<{ province
                 temperature: a.parameter?.[5],
                 weather: a.parameter?.[6],
                 windDirection: a.parameter?.[7],
+                windSpeed: a.parameter?.[8]
             }
         }))
 

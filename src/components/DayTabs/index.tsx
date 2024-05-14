@@ -21,7 +21,16 @@ const DayTabs = ({ groupedTimeRange }: DayTabsProps) => {
         <div className='d-flex grid gap-5'>
           {
             groupedTimeRange[t].map(w => (
-              <Weather key={w.dateTime} unit={w.weatherUnit} time={w.dateTime} temperature={w.temperature} />
+              <Weather 
+                key={w.dateTime} 
+                unit={w.weatherUnit} 
+                time={w.dateTime} 
+                temperature={w.temperature} 
+                date={w.date}
+                windSpeed={w.windSpeed}
+                humidity={w.humidity}
+                windDirection={w.windDirection}
+              />
             ))}
         </div>
       )

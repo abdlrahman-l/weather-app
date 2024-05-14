@@ -15,14 +15,14 @@ export default function Tabs({ tabs }: TabsProps) {
     return (
         <div className="w-full max-w-md">
             <Tab.Group>
-                <Tab.List className="flex gap-2 mb-4">
+                <Tab.List className="flex gap-2 mb-2 overflow-x-auto no-scrollbar pb-2">
                     {
                         tabs?.map(tab => (
                             <Tab
                                 key={tab.tab}
                                 className={({ selected }) =>
                                     clsx(
-                                        'rounded-md px-4 py-2 text-sm bg-primary-100 font-semibold shadow-md',
+                                        'rounded-md px-3 py-2 text-sm bg-primary-100 font-semibold shadow-md whitespace-nowrap',
                                         selected
                                             ? 'bg-primary-800 border-transparent text-white'
                                             : 'text-sky-500'

@@ -67,12 +67,12 @@ export default function RootLayout({
       <body>
         <div className='max-w-md w-full pt-5 px-5 m-auto relative h-screen'>
           {children}
-          <div className='absolute bottom-0 left-0'>
+        </div>
+          <div className='sticky bottom-0 left-0 bg-white'>
             <span>source: &nbsp;
                 <a href="https://data.bmkg.go.id/prakiraan-cuaca/" target="_blank" className='hover:text-primary-200 underline underline-offset-1 '>BMKG</a>
             </span>
           </div>
-        </div>
       </body>
     </html>
   );

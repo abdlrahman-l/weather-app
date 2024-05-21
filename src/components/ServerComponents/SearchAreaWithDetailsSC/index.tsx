@@ -6,6 +6,8 @@ import { FormattedWeather } from "@/lib/types";
 
 import DayTabs from "@/components/DayTabs";
 import SearchArea from "@/components/SearchArea";
+import TemperatureSelect from "@/components/TemperatureSelect";
+
 import { windDirectionCode } from "@/constant/bmkg";
 
 export default async function SearchAreaWithDetailsSC({
@@ -57,13 +59,13 @@ export default async function SearchAreaWithDetailsSC({
 
     return (
         <div>
-            <div>
-                {/* {JSON.stringify(paramObj, null, 2)} */}
-            </div>
             <SearchArea
                 areas={formattedData}
                 defaultArea={area}
             />
+            <div className="mt-5">
+                <TemperatureSelect />
+            </div>
             <div className='mt-5 m-auto'>
                 <DayTabs groupedTimeRange={groupedTimerange} />
             </div>

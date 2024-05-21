@@ -8,6 +8,8 @@ type WeatherContextType = {
 	setProvince: (v: Province | null) => void;
 	area: FormattedArea | null;
 	setArea: (v: FormattedArea | null) => void;
+	isCelcius: boolean;
+	setIsCelcius: (v: boolean) => void;
 };
 
 export default createContext<WeatherContextType>({
@@ -19,4 +21,8 @@ export default createContext<WeatherContextType>({
 	setArea: () => {
 		return;
 	},
+	isCelcius: true,
+	setIsCelcius: () => {
+		return;
+	}
 });

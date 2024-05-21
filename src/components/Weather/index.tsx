@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { Compass, Droplets, Thermometer, Wind } from 'lucide-react';
+import { Compass, Droplets, Wind } from 'lucide-react';
 import React, { useState } from 'react'
 
 import dayjs, { isEvening, isNight } from "@/lib/date";
@@ -11,6 +11,7 @@ import { eveningColorCode, nightColorCode, weatherCode, weatherCodeFile, weather
 
 import LottieAnimation from '../LottieAnimation'
 import Modal from '../Modal';
+import { useWeatherContext } from '../WeatherProvider';
 
 
 type WeatherProps = {
@@ -32,6 +33,7 @@ const getPrimaryColor = ({ time, unit }: Pick<WeatherProps, 'time' | 'unit'>) =>
 const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirection }: WeatherProps) => {
 
     const [isOpenDetails, setIsOpenDetails] = useState(false)
+    const { isCelcius } = useWeatherContext();
 
     const formattedTime = time.slice(8).replace(/^(\d{2})(\d{2})$/, "$1:$2")
     const isNightTime = isNight(time);
@@ -42,7 +44,7 @@ const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirec
     const bgColor = primaryColor?.split?.('-')
 
     //TODO: make it dynamic with option select at Header
-    const selectedUnitTemp = temperature[0]
+    const selectedUnitTemp = temperature[isCelcius ? 0 : 1]
     const formattedTemp = `${selectedUnitTemp.text} °${selectedUnitTemp.unit}`
 
     const details = weatherCode[unit]?.split('/')?.[0];

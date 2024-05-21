@@ -17,6 +17,7 @@ export function useWeatherContext() {
 export default function WeatherProvider({children}: { children: ReactNode }) {
   const [province, setProvince] = useState<Province | null>(null)
   const [area, setArea] = useState<FormattedArea | null>(null)
+  const [isCelcius, setIsCelcius] = useState<boolean>(true)
 
   return (
     <WeatherContext.Provider
@@ -24,7 +25,9 @@ export default function WeatherProvider({children}: { children: ReactNode }) {
         province,
         setProvince,
         area,
-        setArea
+        setArea,
+        isCelcius,
+        setIsCelcius
       }}
     >
       {children}

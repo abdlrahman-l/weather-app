@@ -63,11 +63,11 @@ export default async function SearchAreaWithDetailsSC({
                 areas={formattedData}
                 defaultArea={area}
             />
-            <div className="mt-5">
+            <div className="space-y-5 mt-5">
                 <TemperatureSelect />
-            </div>
-            <div className='mt-5 m-auto'>
-                <DayTabs groupedTimeRange={groupedTimerange} />
+                <div className='m-auto'>
+                    <DayTabs groupedTimeRange={groupedTimerange} />
+                </div>
             </div>
         </div>
     )

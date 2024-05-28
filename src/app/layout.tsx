@@ -5,6 +5,7 @@ import * as React from 'react';
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
+import 'leaflet/dist/leaflet.css'
 
 import { siteConfig } from '@/constant/config';
 
@@ -65,7 +66,7 @@ export default function RootLayout({
   return (
     <html className={lato.className}>
       <body>
-        <div className='max-w-md w-full pt-5 px-5 m-auto relative h-screen'>
+        <div className='max-w-md w-full p-5 m-auto relative min-h-screen'>
           {children}
         </div>
           <div className='sticky bottom-0 left-0 bg-white'>

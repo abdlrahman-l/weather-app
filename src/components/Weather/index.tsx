@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import { Compass, Droplets, Wind } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react'
 
 import dayjs, { isEvening, isNight } from "@/lib/date";
@@ -12,6 +13,11 @@ import { eveningColorCode, nightColorCode, weatherCode, weatherCodeFile, weather
 import LottieAnimation from '../LottieAnimation'
 import Modal from '../Modal';
 import { useWeatherContext } from '../WeatherProvider';
+
+const MapLocationContainer = dynamic(() => import("@/components/Map/MapLocationContainer"), {
+    ssr: false,
+    loading: () => <p>loadinggg....</p>
+})
 
 
 type WeatherProps = {
@@ -33,7 +39,7 @@ const getPrimaryColor = ({ time, unit }: Pick<WeatherProps, 'time' | 'unit'>) =>
 const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirection }: WeatherProps) => {
 
     const [isOpenDetails, setIsOpenDetails] = useState(false)
-    const { isCelcius } = useWeatherContext();
+    const { isCelcius, area } = useWeatherContext();
 
     const formattedTime = time.slice(8).replace(/^(\d{2})(\d{2})$/, "$1:$2")
     const isNightTime = isNight(time);
@@ -43,7 +49,6 @@ const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirec
     const primaryColor = getPrimaryColor({ time, unit })
     const bgColor = primaryColor?.split?.('-')
 
-    //TODO: make it dynamic with option select at Header
     const selectedUnitTemp = temperature[isCelcius ? 0 : 1]
     const formattedTemp = `${selectedUnitTemp.text} °${selectedUnitTemp.unit}`
 
@@ -150,6 +155,13 @@ const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirec
                             <h6 className='font-medium'>Kec. Angin</h6>
                         </div>
                     </div>
+                    {
+                        area?.longitude && area.latitude && (
+                            <div className='mt-5'>
+                                <MapLocationContainer lat={area.latitude} long={area.longitude} />
+                            </div>
+                        )
+                    }
                 </div>
             </Modal>
         </>

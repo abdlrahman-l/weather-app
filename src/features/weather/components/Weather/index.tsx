@@ -2,22 +2,25 @@
 
 import clsx from 'clsx';
 import { Compass, Droplets, Wind } from 'lucide-react';
-import dynamic from 'next/dynamic';
-import React, { useState } from 'react'
+import React from 'react'
 
-import dayjs, { isEvening, isNight } from "@/lib/date";
+import { isEvening, isNight } from "@/lib/date";
 import { FormattedWeather } from '@/lib/types';
 
-import { eveningColorCode, nightColorCode, weatherCode, weatherCodeFile, weatherCodeNightFile, weatherColorCode } from '@/constant/bmkg';
+import { eveningColorCode, nightColorCode, weatherCode, weatherCodeFile, weatherColorCode } from '@/constant/bmkg';
+import useModalState from '@/helpers/hooks/useModalState';
 
-import LottieAnimation from '../LottieAnimation'
-import Modal from '../Modal';
-import { useWeatherContext } from '../WeatherProvider';
+import useLottieSourceFile from '../../hooks/useLottieSourceFile';
+import useUnitTemperature from '../../hooks/useUnitTemperature';
+import useWeatherFormattedTime from '../../hooks/useWeatherFormattedTime';
+import LottieAnimation from '../../../../components/LottieAnimation'
+import Modal from '../../../../components/Modal';
 
-const MapLocationContainer = dynamic(() => import("@/components/Map/MapLocationContainer"), {
-    ssr: false,
-    loading: () => <p>loadinggg....</p>
-})
+// use dynamic ssr false import due to react leaflet is only working in the client
+// const MapLocationContainer = dynamic(() => import("@/components/Map/MapLocationContainer"), {
+//     ssr: false,
+//     loading: () => <p>loadinggg....</p>
+// })
 
 
 type WeatherProps = {
@@ -37,36 +40,26 @@ const getPrimaryColor = ({ time, unit }: Pick<WeatherProps, 'time' | 'unit'>) =>
 }
 
 const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirection }: WeatherProps) => {
+    const { isOpenModal, openModal, closeModal } = useModalState();
 
-    const [isOpenDetails, setIsOpenDetails] = useState(false)
-    const { isCelcius, area } = useWeatherContext();
+    const formattedTemp = useUnitTemperature(temperature)
 
-    const formattedTime = time.slice(8).replace(/^(\d{2})(\d{2})$/, "$1:$2")
-    const isNightTime = isNight(time);
-    const isEveningTime = isEvening(time);
-    const formattedDate = dayjs(date).format('dddd, D MMMM')
+    const lottieNameFile = useLottieSourceFile(time, unit)
+
+    const {
+        formattedDate,
+        formattedTime
+    } = useWeatherFormattedTime(time, date)
 
     const primaryColor = getPrimaryColor({ time, unit })
     const bgColor = primaryColor?.split?.('-')
 
-    const selectedUnitTemp = temperature[isCelcius ? 0 : 1]
-    const formattedTemp = `${selectedUnitTemp.text} °${selectedUnitTemp.unit}`
-
     const details = weatherCode[unit]?.split('/')?.[0];
-    const lottieNameFile = (isNightTime || isEveningTime ? weatherCodeNightFile : weatherCodeFile)[unit]
-
-    const openDetails = () => {
-        setIsOpenDetails(true)
-    }
-
-    const closeDetails = () => {
-        setIsOpenDetails(false)
-    }
 
     return (
         <>
             <div
-                onClick={openDetails}
+                onClick={openModal}
                 className={
                     clsx(
                         'h-20 flex justify-between items-center shadow-lg rounded-lg p-3 cursor-pointer',
@@ -105,8 +98,8 @@ const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirec
                 <h6 className='font-medium text-2xl text-white'>{formattedTime}</h6>
             </div>
             <Modal
-                isOpen={isOpenDetails}
-                onClose={closeDetails}
+                isOpen={isOpenModal}
+                onClose={closeModal}
                 containerClassname={clsx('min-h-80', `${bgColor[0]}`, `bg-primary-${bgColor[1]}`)}
             >
                 <div>
@@ -155,13 +148,13 @@ const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirec
                             <h6 className='font-medium'>Kec. Angin</h6>
                         </div>
                     </div>
-                    {
+                    {/* {
                         area?.longitude && area.latitude && (
                             <div className='mt-5'>
                                 <MapLocationContainer lat={area.latitude} long={area.longitude} />
                             </div>
                         )
-                    }
+                    } */}
                 </div>
             </Modal>
         </>

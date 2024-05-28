@@ -4,8 +4,9 @@ import React from 'react'
 
 import { FormattedWeather } from '@/lib/types';
 
+import Weather from '@/features/weather/components/Weather'
+
 import Tabs from '../Tabs'
-import Weather from '../Weather'
 
 type DayTabsProps = {
     groupedTimeRange: {

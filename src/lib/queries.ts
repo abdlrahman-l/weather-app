@@ -1,6 +1,7 @@
 import { weatherBaseUrl } from "@/constant/env";
 
 import { FormattedArea, ProvinceList, ProvinceWeather } from "./types";
+import { separateWithSpaces, slugify } from "./utils";
 
 export const getProvinceList = async (): Promise<ProvinceList | null> => {
     try {
@@ -38,7 +39,18 @@ export const getProvinceList = async (): Promise<ProvinceList | null> => {
             throw new Error('Data not found!')
         }
 
-        return provinceListData
+        return {
+            ...provinceListData,
+            data: {
+                provinces: {
+                    ...provinceListData,
+                    data: provinceListData.data.provinces.data.map(d => ({
+                        ...d,
+                        slug: slugify(separateWithSpaces(d.id)),
+                    }))
+                }
+            }
+        }
     } catch (error) {
         console.error(error)
         return null
@@ -46,8 +58,10 @@ export const getProvinceList = async (): Promise<ProvinceList | null> => {
 }
 
 
-export const getProvinceWeather = async (provinceId: string): Promise<{ provinceWeatherData: ProvinceWeather; formattedData: FormattedArea[] } | null> => {
+export const getProvinceWeather = async (provinceSlug: string): Promise<{ provinceWeatherData: ProvinceWeather; formattedData: FormattedArea[] } | null> => {
     try {
+        const provinceList = await getProvinceList();
+        const provinceId = provinceList?.data?.provinces?.data?.find?.(p => p.slug === provinceSlug)?.id
         const response = await fetch(weatherBaseUrl, {
             method: 'POST',
             headers: {

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import dayjs from "@/lib/date";
 import { getProvinceWeather } from "@/lib/queries";
 import { FormattedWeather } from "@/lib/types";
+import { slugify } from "@/lib/utils";
 
 import DayTabs from "@/components/DayTabs";
 import SearchArea from "@/components/SearchArea";
@@ -24,7 +25,7 @@ export default async function SearchAreaWithDetailsSC({
         notFound();
     }
 
-    const area = formattedData?.find?.(d => d.id === areaId) || formattedData[0]
+    const area = formattedData?.find?.(d => slugify(d.description) === areaId) || formattedData[0]
     const { paramObj } = area;
 
     if (!paramObj.weather?.timerange) {

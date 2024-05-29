@@ -14,7 +14,7 @@ export default async function SearchLocationSC({ provinceId }: SearchLocationSCP
     )
 
     const provinces = provinceList.data.provinces.data
-    const defaultProvince = provinces.find(p => provinceId ? provinceId === p.id : p.name.toLowerCase().includes('jakarta'))
+    const defaultProvince = provinces.find(p => provinceId ? provinceId === p.slug : p.name.toLowerCase().includes('jakarta'))
 
     return (
         <SearchLocation

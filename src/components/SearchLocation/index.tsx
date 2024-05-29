@@ -19,7 +19,7 @@ const SearchLocation = ({ provinces, defaultProvince }: SearchLocationProps) => 
     const selectedProvince = province || defaultProvince
 
     useEffect(() => {
-        if (defaultProvince) 
+        if (defaultProvince)
             setProvince(defaultProvince)
 
     }, [defaultProvince, setProvince])
@@ -27,19 +27,19 @@ const SearchLocation = ({ provinces, defaultProvince }: SearchLocationProps) => 
     return (
         <div>
             <DropdownSelect
-                options={provinces.map(v => ({ id: v.id, value: v.name }))}
+                options={provinces.map(v => ({ id: v.slug || v.id, value: v.name }))}
                 defaultOption={
                     selectedProvince ? {
-                        id: selectedProvince.id,
+                        id: selectedProvince.slug || selectedProvince.id,
                         value: selectedProvince.name,
                     } : undefined
                 }
-                onSelect={({ id, value }) => {
-                    setProvince({
-                        id,
-                        name: value
-                    })
-                    router.push(`/weather/${id}`)
+                onSelect={({ id }) => {
+                    const selectedProvince = provinces.find(p => (p.slug || p.id) === id)
+                    if (selectedProvince) {
+                        setProvince(selectedProvince)
+                        router.push(`/weather/${selectedProvince.slug}`)
+                    }
                 }}
             />
         </div>

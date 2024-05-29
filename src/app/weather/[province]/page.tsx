@@ -13,7 +13,7 @@ export async function generateStaticParams() {
     if (!provinceList) return []
 
     return provinceList?.data?.provinces?.data?.map?.(p => ({
-        province: p.id
+        province: p.slug
     }))
 }
 

@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 import { FormattedArea } from '@/lib/types';
+import { slugify } from '@/lib/utils';
 
 import DropdownSelect from '../DropdownSelect';
 import { useWeatherContext } from '../WeatherProvider'
@@ -27,17 +28,19 @@ const SearchArea = ({ areas, defaultArea }: SearchAreaProps) => {
     return (
         <div>
             <DropdownSelect
-                options={areas.map(v => ({ id: v.id, value: v.name?.[1] || v.description }))}
+                options={areas.map(v => ({ id: v.id, value: v.description }))}
                 defaultOption={
                     selectedArea ? {
                         id: selectedArea.id,
-                        value: selectedArea.name?.[1] || selectedArea.description,
+                        value: selectedArea.description,
                     } : undefined
                 }
                 onSelect={({ id }) => {
                     const selectedAreaOption = areas?.find(a => a.id === id)
-                    if (selectedAreaOption) setArea(selectedAreaOption)
-                    router.push(`/weather/${province?.id}/${id}`)
+                    if (selectedAreaOption && province) {
+                        setArea(selectedAreaOption)
+                        router.push(`/weather/${province?.slug}/${slugify(selectedAreaOption?.description)}`)
+                    }
                 }}
             />
         </div>

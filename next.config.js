@@ -15,7 +15,7 @@ const nextConfig = {
       // Basic redirect
       {
         source: '/weather',
-        destination: '/weather/Indonesia/501195',
+        destination: '/weather/indonesia',
         permanent: true,
       },
     ]

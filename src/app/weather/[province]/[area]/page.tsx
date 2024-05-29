@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 
 import { getProvinceWeather } from '@/lib/queries'
+import { slugify } from '@/lib/utils'
 
 import SearchAreaWithDetailsSC from '@/components/ServerComponents/SearchAreaWithDetailsSC'
 import SearchLocationSC from '@/components/ServerComponents/SearchLocationSC'
@@ -16,7 +17,7 @@ export async function generateStaticParams({
   if (!formattedData) return []
 
   return formattedData.map(d => ({
-    area: d.id
+    area: slugify(d.description)
   }))
 }
 

@@ -63,7 +63,8 @@ interface DataWeather {
 
 export interface Province {
     id: string,
-    name: string
+    name: string,
+    slug?: string,
 }
 
 interface ProvinceListData {

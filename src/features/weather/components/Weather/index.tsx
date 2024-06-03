@@ -10,9 +10,9 @@ import { FormattedWeather } from '@/lib/types';
 import { eveningColorCode, nightColorCode, weatherCode, weatherCodeFile, weatherColorCode } from '@/constant/bmkg';
 import useModalState from '@/helpers/hooks/useModalState';
 
+import useFormatWeatherTime from '../../hooks/useFormatWeatherTime';
 import useLottieSourceFile from '../../hooks/useLottieSourceFile';
 import useUnitTemperature from '../../hooks/useUnitTemperature';
-import useWeatherFormattedTime from '../../hooks/useWeatherFormattedTime';
 import LottieAnimation from '../../../../components/LottieAnimation'
 import Modal from '../../../../components/Modal';
 
@@ -49,7 +49,7 @@ const Weather = ({ unit, time, temperature, date, humidity, windSpeed, windDirec
     const {
         formattedDate,
         formattedTime
-    } = useWeatherFormattedTime(time, date)
+    } = useFormatWeatherTime(time, date)
 
     const primaryColor = getPrimaryColor({ time, unit })
     const bgColor = primaryColor?.split?.('-')

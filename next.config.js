@@ -15,10 +15,15 @@ const nextConfig = {
       // Basic redirect
       {
         source: '/weather',
-        destination: '/weather/Indonesia/501195',
+        destination: '/weather/DKIJakarta/501195',
         permanent: true,
       },
-    ]
+      {
+        source: '/',
+        destination: '/weather/DKIJakarta/501195',
+        permanent: true,
+      },
+    ];
   },
 
   reactStrictMode: true,

@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 import { FormattedArea } from '@/lib/types';
@@ -14,7 +13,6 @@ type SearchAreaProps = {
 
 const SearchArea = ({ areas, defaultArea }: SearchAreaProps) => {
   const { setArea, province } = useWeatherContext();
-  const router = useRouter();
   const selectedArea = defaultArea || areas?.[0];
 
   useEffect(() => {
@@ -27,6 +25,7 @@ const SearchArea = ({ areas, defaultArea }: SearchAreaProps) => {
         options={areas.map((v) => ({
           id: v.id,
           value: v.name?.[1] || v.description,
+          href: `/weather/${province?.id}/${v.id}`,
         }))}
         defaultOption={
           selectedArea
@@ -39,9 +38,6 @@ const SearchArea = ({ areas, defaultArea }: SearchAreaProps) => {
         onSelect={({ id }) => {
           const selectedAreaOption = areas?.find((a) => a.id === id);
           if (selectedAreaOption) setArea(selectedAreaOption);
-          const url = `/weather/${province?.id}/${id}`;
-          router.prefetch(url);
-          router.push(url);
         }}
       />
     </div>

@@ -61,7 +61,11 @@ export default function DropdownSelect({
               </div>
             ) : (
               filteredOptions.map((option) => (
-                <Link key={option.id} href={option?.href || ''}>
+                <Link
+                  key={option.id}
+                  href={option?.href || ''}
+                  prefetch={false}
+                >
                   <Combobox.Option
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${

@@ -2,37 +2,24 @@ import { weatherBaseUrl } from '@/constant/env';
 
 import { Area, FormattedArea, ProvinceList, ProvinceWeather } from './types';
 
-export const getProvinceList = async (): Promise<ProvinceList | null> => {
+export const getProvinceList = async (): Promise<
+  ProvinceList['data']['provinces'] | null
+> => {
   try {
-    const response = await fetch(weatherBaseUrl, {
-      method: 'POST',
+    const response = await fetch(`${weatherBaseUrl}/provinces`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        query: `query ProvinceListQuery {
-                    provinces {
-                      data {
-                        id
-                        name
-                      }
-                      meta {
-                        copyright
-                        url_reference
-                        website
-                      }
-                    }
-                  }
-                  `,
-      }),
     });
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
 
-    const provinceListData = (await response.json()) as ProvinceList;
-    const data = provinceListData?.data?.provinces?.data;
+    const provinceListData =
+      (await response.json()) as ProvinceList['data']['provinces'];
+    const data = provinceListData?.data;
 
     if (data === null || data.length <= 0) {
       throw new Error('Data not found!');
@@ -47,72 +34,28 @@ export const getProvinceList = async (): Promise<ProvinceList | null> => {
 export const getProvinceWeather = async (
   provinceId: string
 ): Promise<{
-  provinceWeatherData: ProvinceWeather;
   formattedData: FormattedArea[];
 } | null> => {
   try {
-    const response = await fetch(weatherBaseUrl, {
-      method: 'POST',
+    const response = await fetch(`${weatherBaseUrl}/weather/${provinceId}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      next: {
-        revalidate: 86400, // Cache the weather for 1 day.
-      },
-      body: JSON.stringify({
-        query: `
-                    query Data($provinceId: String!) {
-                        weather(province_id: $provinceId) {
-                        data {
-                            forecast {
-                            domain
-                            timestamp
-                            area {
-                                id
-                                latitude
-                                longitude
-                                coordinate
-                                type
-                                region
-                                level
-                                description
-                                domain
-                                tags
-                                name
-                                parameter {
-                                description
-                                timerange {
-                                    type
-                                    datetime
-                                    value {
-                                    unit
-                                    text
-                                    }
-                                }
-                                }
-                            }
-                            }
-                        }
-                        }
-                    }
-                  `,
-        variables: {
-          provinceId: provinceId,
-        },
-      }),
     });
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
 
-    const provinceWeatherData = (await response.json()) as ProvinceWeather;
+    const provinceWeatherData =
+      (await response.json()) as ProvinceWeather['data']['weather'];
 
     if (provinceWeatherData === null) {
       throw new Error('Data not found!');
     }
 
-    const areaList = provinceWeatherData.data.weather.data.forecast.area;
+    const areaList = provinceWeatherData.data.forecast.area;
     const formattedData = [...areaList].map<FormattedArea>((a) => ({
       ...a,
       paramObj: {
@@ -128,7 +71,7 @@ export const getProvinceWeather = async (
       },
     }));
 
-    return { provinceWeatherData, formattedData };
+    return { formattedData };
   } catch (error) {
     return null;
   }
@@ -137,53 +80,30 @@ export const getProvinceWeather = async (
 export const getProvinceDescriptionId = async (
   provinceId: string
 ): Promise<{
-  provinceWeatherData: ProvinceWeather;
   areaList: Area[];
 } | null> => {
   try {
-    const response = await fetch(weatherBaseUrl, {
-      method: 'POST',
+    const response = await fetch(`${weatherBaseUrl}/weather/${provinceId}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      next: {
-        revalidate: 86400, // Cache the weather for 1 day.
-      },
-      body: JSON.stringify({
-        query: `
-                    query Data($provinceId: String!) {
-                        weather(province_id: $provinceId) {
-                        data {
-                            forecast {
-                            area {
-                                parameter {
-                                description
-                                }
-                            }
-                            }
-                        }
-                        }
-                    }
-                  `,
-        variables: {
-          provinceId: provinceId,
-        },
-      }),
     });
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
 
-    const provinceWeatherData = (await response.json()) as ProvinceWeather;
+    const provinceWeatherData =
+      (await response.json()) as ProvinceWeather['data']['weather'];
 
     if (provinceWeatherData === null) {
       throw new Error('Data not found!');
     }
 
-    const areaList = provinceWeatherData.data.weather.data.forecast.area;
+    const areaList = provinceWeatherData.data.forecast.area;
 
-    return { provinceWeatherData, areaList };
+    return { areaList };
   } catch (error) {
     return null;
   }

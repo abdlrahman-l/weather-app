@@ -1,25 +1,24 @@
-import { getProvinceList } from "@/lib/queries";
+import { getProvinceList } from '@/lib/queries';
 
-import SearchLocation from "@/components/SearchLocation";
+import SearchLocation from '@/components/SearchLocation';
 
 type SearchLocationSCProps = {
-    provinceId?: string;
-}
+  provinceId?: string;
+};
 
-export default async function SearchLocationSC({ provinceId }: SearchLocationSCProps) {
-    const provinceList = await getProvinceList();
+export default async function SearchLocationSC({
+  provinceId,
+}: SearchLocationSCProps) {
+  const provinceList = await getProvinceList();
 
-    if (!provinceList) return (
-        <p>No data available...</p>
-    )
+  if (!provinceList) return <p>No data available...</p>;
 
-    const provinces = provinceList.data.provinces.data
-    const defaultProvince = provinces.find(p => provinceId ? provinceId === p.id : p.name.toLowerCase().includes('jakarta'))
+  const provinces = provinceList.data;
+  const defaultProvince = provinces.find((p) =>
+    provinceId ? provinceId === p.id : p.name.toLowerCase().includes('jakarta')
+  );
 
-    return (
-        <SearchLocation
-            provinces={provinces}
-            defaultProvince={defaultProvince}
-        />
-    )
+  return (
+    <SearchLocation provinces={provinces} defaultProvince={defaultProvince} />
+  );
 }

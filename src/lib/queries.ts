@@ -42,6 +42,7 @@ export const getProvinceWeather = async (
       headers: {
         'Content-Type': 'application/json',
       },
+      next: { revalidate: 86400, tags: ['weather', provinceId] },
     });
 
     if (!response.ok) {
@@ -88,6 +89,7 @@ export const getProvinceDescriptionId = async (
       headers: {
         'Content-Type': 'application/json',
       },
+      next: { revalidate: 86400, tags: ['weather', provinceId] },
     });
 
     if (!response.ok) {

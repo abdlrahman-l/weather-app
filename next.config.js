@@ -15,12 +15,12 @@ const nextConfig = {
       // Basic redirect
       {
         source: '/weather',
-        destination: '/weather/DKIJakarta/501195',
+        destination: '/region/31',
         permanent: true,
       },
       {
         source: '/',
-        destination: '/weather/DKIJakarta/501195',
+        destination: '/region/31',
         permanent: true,
       },
     ];

@@ -7,6 +7,7 @@ import { FormattedWeather, WeatherResponse } from '@/lib/types';
 
 import DayTabs from '@/components/DayTabs';
 
+import { weatherBaseUrl } from '@/constant/env';
 import regionCode from '@/constant/kode-wilayah.json';
 
 export async function generateStaticParams() {
@@ -35,7 +36,7 @@ export default async function ProvincePage({
   const query = `adm${splitted.length > 0 ? splitted.length : 1}=${
     params.code
   }`;
-  const url = `https://api.bmkg.go.id/publik/prakiraan-cuaca?${query}`;
+  const url = `${weatherBaseUrl}?${query}`;
   const data = await fetch(url, {
     next: { revalidate: 86400, tags: ['weather', params.code] },
   });

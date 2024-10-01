@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
+import RegionSearch from '@/components/region/RegionSearch';
 import WeatherProvider from '@/components/WeatherProvider';
+
+import regionCode from '@/constant/kode-wilayah.json';
 
 /**
  * Default metadata.
@@ -10,7 +13,7 @@ import WeatherProvider from '@/components/WeatherProvider';
  */
 export const metadata: Metadata = {
   title: 'Weather App',
-  description: 'Weather App forecast Indonesia areas',
+  description: 'Weather App forecast Indonesia regions',
 };
 
 /**
@@ -18,10 +21,17 @@ export const metadata: Metadata = {
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/layout
  */
-export default function WeatherLayout({ children }: { children: ReactNode }) {
+export default function WeatherLayout({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: { code: keyof (typeof regionCode)['DATA'] };
+}) {
   return (
     <WeatherProvider>
-      <section>{children}</section>
+      <RegionSearch code={params.code} />
+      {children}
     </WeatherProvider>
   );
 }

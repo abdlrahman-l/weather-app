@@ -5,7 +5,7 @@ import Link from 'next/link';
 // import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Fragment, useState } from 'react';
 
-type Option = {
+export type Option = {
   id: string;
   value: string;
   href?: string;
@@ -15,12 +15,14 @@ export type DropdownSelectProps = {
   options: Option[];
   defaultOption?: Option;
   onSelect?: (id: Option) => void;
+  placeholder?: string;
 };
 
 export default function DropdownSelect({
   options,
   defaultOption,
   onSelect,
+  placeholder,
 }: DropdownSelectProps) {
   const [query, setQuery] = useState('');
 
@@ -42,6 +44,7 @@ export default function DropdownSelect({
             className='w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0'
             displayValue={(option: Option) => option.value}
             onChange={(event) => setQuery(event.target.value)}
+            placeholder={placeholder}
           />
           <Combobox.Button className='absolute inset-y-0 right-0 flex items-center pr-2'>
             <ChevronsDownUp size={20} strokeWidth={1} />
@@ -81,26 +84,31 @@ export default function DropdownSelect({
                       zIndex: 2,
                     }}
                   >
-                    {({ selected, active }) => (
-                      <div>
-                        <span
-                          className={`block truncate ${
-                            selected ? 'font-medium' : 'font-normal'
-                          }`}
-                        >
-                          {option.value}
-                        </span>
-                        {selected ? (
+                    {(props) => {
+                      const { selected: selectedOption, active } = props;
+                      const selected =
+                        selectedOption || option.id === defaultOption?.id;
+                      return (
+                        <div>
                           <span
-                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? 'text-white' : 'text-teal-600'
+                            className={`block truncate ${
+                              selected ? 'font-medium' : 'font-normal'
                             }`}
                           >
-                            <Check size={20} strokeWidth={1} />
+                            {option.value}
                           </span>
-                        ) : null}
-                      </div>
-                    )}
+                          {selected ? (
+                            <span
+                              className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                                active ? 'text-white' : 'text-teal-600'
+                              }`}
+                            >
+                              <Check size={20} strokeWidth={1} />
+                            </span>
+                          ) : null}
+                        </div>
+                      );
+                    }}
                   </Combobox.Option>
                 </Link>
               ))

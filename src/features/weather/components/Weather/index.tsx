@@ -4,12 +4,12 @@ import clsx from 'clsx';
 import { Compass, Droplets, Wind } from 'lucide-react';
 import React from 'react';
 
-import { isEvening, isNight } from '@/lib/date';
 import dayjs from '@/lib/date';
 import { FormattedWeather } from '@/lib/types';
 
 import {
   eveningColorCode,
+  morningColorCode,
   nightColorCode,
   weatherCodeFile,
   weatherColorCode,
@@ -42,9 +42,16 @@ const getPrimaryColor = ({
   time,
   unit,
 }: Pick<WeatherProps, 'time' | 'unit'>) => {
-  if (isEvening(time)) return eveningColorCode;
-  if (isNight(time)) return nightColorCode;
-  return weatherColorCode[unit];
+  const hour = dayjs(time).get('hour');
+  if (hour >= 7 && hour <= 11) {
+    return morningColorCode;
+  } else if (hour >= 12 && hour <= 16) {
+    return weatherColorCode[unit];
+  } else if (hour >= 17 && hour <= 20) {
+    return eveningColorCode;
+  } else {
+    return nightColorCode;
+  }
 };
 
 const Weather = ({

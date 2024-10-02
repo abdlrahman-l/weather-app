@@ -71,6 +71,7 @@ export const weatherColorCode = {
 
 export const nightColorCode = 'sky-900';
 export const eveningColorCode = 'sky-700';
+export const morningColorCode = 'sky-500';
 
 export const windDirectionCode: Record<string, string> = {
   N: 'Utara',

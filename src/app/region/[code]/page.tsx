@@ -47,7 +47,7 @@ export default async function ProvincePage({
     .reduce<{
       [key: string]: FormattedWeather[];
     }>((acc, curr) => {
-      const date = dayjs(curr.datetime);
+      const date = dayjs(curr.local_datetime);
       const key = `${date.format('ddd, D MMM')}`;
       try {
         return {
@@ -55,7 +55,7 @@ export default async function ProvincePage({
           [key]: [
             ...(acc[key] || []),
             {
-              dateTime: curr.datetime,
+              dateTime: curr.local_datetime,
               date: date.format('dddd, D MMMM'),
               humidity: `${curr.hu}%`,
               windSpeed: `${curr.ws} km/j`,

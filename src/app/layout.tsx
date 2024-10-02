@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
-import { Lato } from 'next/font/google'
+import { Lato } from 'next/font/google';
 import * as React from 'react';
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
-import 'leaflet/dist/leaflet.css'
+import 'leaflet/dist/leaflet.css';
 
 import { siteConfig } from '@/constant/config';
 
@@ -14,7 +14,7 @@ const lato = Lato({
   style: ['normal', 'italic'],
   subsets: ['latin'],
   display: 'swap',
-})
+});
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     images: [`${siteConfig.url}/images/og.jpg`],
-    // creator: '@th_clarence',
+    creator: '@abdlrahman_l',
   },
   // authors: [
   //   {
@@ -69,11 +69,18 @@ export default function RootLayout({
         <div className='max-w-md w-full p-5 m-auto relative min-h-screen'>
           {children}
         </div>
-          <div className='sticky bottom-0 left-0 bg-white'>
-            <span>source: &nbsp;
-                <a href="https://data.bmkg.go.id/prakiraan-cuaca/" target="_blank" className='hover:text-primary-200 underline underline-offset-1 '>BMKG</a>
-            </span>
-          </div>
+        <div className='sticky bottom-0 left-0 bg-white'>
+          <span>
+            source: &nbsp;
+            <a
+              href='https://data.bmkg.go.id/prakiraan-cuaca/'
+              target='_blank'
+              className='hover:text-primary-200 underline underline-offset-1 '
+            >
+              BMKG
+            </a>
+          </span>
+        </div>
       </body>
     </html>
   );

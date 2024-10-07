@@ -27,6 +27,8 @@ export async function generateStaticParams() {
   }, []);
 }
 
+export const revalidate = 86400;
+
 export default async function ProvincePage({
   params,
 }: {
@@ -37,9 +39,7 @@ export default async function ProvincePage({
     params.code
   }`;
   const url = `${weatherBaseUrl}?${query}`;
-  const data = await fetch(url, {
-    next: { revalidate: 86400, tags: ['weather', params.code] },
-  });
+  const data = await fetch(url);
   const weatherData = (await data.json()) as WeatherResponse;
 
   const grouppedTimeRange = weatherData.data[0].cuaca

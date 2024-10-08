@@ -72,8 +72,8 @@ export default async function ProvincePage({
     }, {});
 
   return (
-    <section className='my-5'>
+    <>
       <DayTabs groupedTimeRange={grouppedTimeRange} />
-    </section>
+    </>
   );
 }

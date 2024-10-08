@@ -5,8 +5,8 @@ import * as React from 'react';
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
-import 'leaflet/dist/leaflet.css';
 
+// import 'leaflet/dist/leaflet.css';
 import { siteConfig } from '@/constant/config';
 
 const lato = Lato({

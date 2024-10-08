@@ -53,7 +53,7 @@ const RegionSearch = ({ code }: RegionSearchProps) => {
   );
 
   return (
-    <>
+    <section className='mb-5'>
       <DropdownSelect
         options={options[1]}
         defaultOption={{
@@ -103,7 +103,7 @@ const RegionSearch = ({ code }: RegionSearchProps) => {
           placeholder='Pilih Kelurahan / Desa'
         />
       )}
-    </>
+    </section>
   );
 };
 

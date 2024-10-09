@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { Lato } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
 import * as React from 'react';
 
 import '@/styles/globals.css';
@@ -66,6 +67,7 @@ export default function RootLayout({
   return (
     <html className={lato.className}>
       <body>
+        <NextTopLoader showSpinner={false} />
         <div className='max-w-md w-full p-5 m-auto relative min-h-screen'>
           {children}
         </div>

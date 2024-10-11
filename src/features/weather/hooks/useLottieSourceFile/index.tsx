@@ -1,13 +1,21 @@
-
-import { isEvening, isNight } from '@/lib/date';
+import dayjs from '@/lib/date';
 
 import { weatherCodeFile, weatherCodeNightFile } from '@/constant/bmkg';
 
-const useLottieSourceFile = (time: string, unit: keyof typeof weatherCodeFile) => {
-  const isNightTime = isNight(time);
-  const isEveningTime = isEvening(time);
+const useLottieSourceFile = (
+  time: string,
+  unit: keyof typeof weatherCodeFile
+) => {
+  const hour = dayjs(time).get('hour');
+  const getFileType = () => {
+    if (hour >= 7 && hour <= 18) {
+      return weatherCodeFile;
+    } else {
+      return weatherCodeNightFile;
+    }
+  };
 
-  return (isNightTime || isEveningTime ? weatherCodeNightFile : weatherCodeFile)[unit]
-}
+  return getFileType()[unit];
+};
 
-export default useLottieSourceFile
+export default useLottieSourceFile;

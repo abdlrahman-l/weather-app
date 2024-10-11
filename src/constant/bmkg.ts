@@ -18,7 +18,7 @@ export const weatherCode = {
 export const weatherCodeFile = {
   0: 'cerahPagi',
   1: 'cerahPagiBerawan',
-  2: 'cerahMalamBerawan',
+  2: 'cerahPagiBerawan',
   3: 'berawan',
   4: 'berawan',
   5: 'awanBerangin',

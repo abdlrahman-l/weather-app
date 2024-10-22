@@ -1,11 +1,8 @@
 // import { getProvinceList } from '@/lib/queries';
 
-import { notFound } from 'next/navigation';
+import { WeatherResponse } from '@/lib/types';
 
-import dayjs from '@/lib/date';
-import { FormattedWeather, WeatherResponse } from '@/lib/types';
-
-import DayTabs from '@/components/DayTabs';
+import WeatherListGroup from '@/components/WeatherListGroup';
 
 import { weatherBaseUrl } from '@/constant/env';
 import regionCode from '@/constant/kode-wilayah.json';
@@ -29,6 +26,14 @@ export async function generateStaticParams() {
 
 export const revalidate = 86400;
 
+const getWeatherData = async (query: string) => {
+  const url = `${weatherBaseUrl}?${query}`;
+  const data = await fetch(url);
+  const weatherData = (await data.json()) as WeatherResponse;
+
+  return weatherData;
+};
+
 export default async function ProvincePage({
   params,
 }: {
@@ -38,42 +43,12 @@ export default async function ProvincePage({
   const query = `adm${splitted.length > 0 ? splitted.length : 1}=${
     params.code
   }`;
-  const url = `${weatherBaseUrl}?${query}`;
-  const data = await fetch(url);
-  const weatherData = (await data.json()) as WeatherResponse;
 
-  const grouppedTimeRange = weatherData.data[0].cuaca
-    .flatMap((d) => d)
-    .reduce<{
-      [key: string]: FormattedWeather[];
-    }>((acc, curr) => {
-      const date = dayjs(curr.local_datetime);
-      const key = `${date.format('ddd, D MMM')}`;
-      try {
-        return {
-          ...acc,
-          [key]: [
-            ...(acc[key] || []),
-            {
-              dateTime: curr.local_datetime,
-              date: date.format('dddd, D MMMM'),
-              humidity: `${curr.hu}%`,
-              windSpeed: `${curr.ws} km/j`,
-              windDirection: `${curr.wd}-${curr.wd_to}`,
-              weatherUnit: curr.weather,
-              temp: `${curr.t} °C`,
-              details: curr.weather_desc,
-            },
-          ],
-        };
-      } catch (error) {
-        notFound();
-      }
-    }, {});
+  const weatherData = await getWeatherData(query);
 
   return (
     <>
-      <DayTabs groupedTimeRange={grouppedTimeRange} />
+      <WeatherListGroup weatherData={weatherData} />
     </>
   );
 }

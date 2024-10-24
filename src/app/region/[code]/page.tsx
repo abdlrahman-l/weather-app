@@ -2,33 +2,36 @@
 
 import { WeatherResponse } from '@/lib/types';
 
-import WeatherListGroup from '@/components/WeatherListGroup';
-
-import { weatherBaseUrl } from '@/constant/env';
+// import WeatherListGroup from '@/components/WeatherListGroup';
+// import { weatherBaseUrl } from '@/constant/env';
 import regionCode from '@/constant/kode-wilayah.json';
 
-export async function generateStaticParams() {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  return Object.keys(regionCode.DATA).reduce((acc, curr) => {
-    const isProvince = !curr.includes('.');
+// export async function generateStaticParams() {
+//   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//   //@ts-ignore
+//   return Object.keys(regionCode.DATA).reduce((acc, curr) => {
+//     const isProvince = !curr.includes('.');
 
-    return !isProvince
-      ? acc
-      : [
-          ...acc,
-          {
-            code: curr,
-          },
-        ];
-  }, []);
+//     return !isProvince
+//       ? acc
+//       : [
+//           ...acc,
+//           {
+//             code: curr,
+//           },
+//         ];
+//   }, []);
+// }
+
+export async function generateStaticParams() {
+  return [];
 }
 
-export const revalidate = 86400;
+export const revalidate = 50;
 
-const getWeatherData = async (query: string) => {
-  const url = `${weatherBaseUrl}?${query}`;
-  const data = await fetch(url);
+const getWeatherData = async () => {
+  // const url = `${weatherBaseUrl}?${query}`;
+  const data = await fetch(`http://localhost:3000/api/test`);
   const weatherData = (await data.json()) as WeatherResponse;
 
   return weatherData;
@@ -44,11 +47,13 @@ export default async function ProvincePage({
     params.code
   }`;
 
-  const weatherData = await getWeatherData(query);
+  const weatherData = await getWeatherData();
 
   return (
     <>
-      <WeatherListGroup weatherData={weatherData} />
+      {JSON.stringify(weatherData)}
+      {JSON.stringify(query)}
+      {/* <WeatherListGroup weatherData={weatherData} /> */}
     </>
   );
 }

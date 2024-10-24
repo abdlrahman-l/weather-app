@@ -31,7 +31,9 @@ export const revalidate = 50;
 
 const getWeatherData = async () => {
   // const url = `${weatherBaseUrl}?${query}`;
-  const data = await fetch(`http://localhost:3000/api/test`);
+  const data = await fetch(
+    'https://weather-app-git-testing-revalidate-abdlrahmanls-projects.vercel.app/api/test'
+  );
   const weatherData = (await data.json()) as WeatherResponse;
 
   return weatherData;

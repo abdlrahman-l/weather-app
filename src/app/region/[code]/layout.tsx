@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
-import RegionSearch from '@/components/region/RegionSearch';
+import RegionSearchModal from '@/components/region/RegionSearchModal';
 import WeatherProvider from '@/components/WeatherProvider';
 
 import regionCode from '@/constant/kode-wilayah.json';
@@ -30,7 +30,7 @@ export default function WeatherLayout({
 }) {
   return (
     <WeatherProvider>
-      <RegionSearch code={params.code} />
+      <RegionSearchModal code={params.code} />
       {children}
     </WeatherProvider>
   );

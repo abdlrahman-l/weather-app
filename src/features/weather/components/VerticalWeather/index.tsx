@@ -36,7 +36,7 @@ const VerticalWeather = ({
         style: {
           height: isExpanded ? 120 : 60,
         },
-        autoplay: true,
+        autoplay: false,
       }}
     />
   );

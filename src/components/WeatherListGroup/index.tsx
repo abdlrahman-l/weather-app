@@ -16,7 +16,7 @@ const WeatherListGroup = ({ weatherData }: WeatherListGroupProps) => {
 
   const grouppedTimeRange = useMemo(
     () =>
-      weatherData.data[0].cuaca
+      weatherData.data?.[0].cuaca
         .flatMap((d) => d)
         .reduce<{
           [key: string]: FormattedWeather[];
@@ -42,8 +42,8 @@ const WeatherListGroup = ({ weatherData }: WeatherListGroupProps) => {
               },
             ],
           };
-          // eslint-disable-next-line react-hooks/exhaustive-deps
         }, {}),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

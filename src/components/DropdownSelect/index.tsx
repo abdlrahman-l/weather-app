@@ -1,7 +1,6 @@
 'use client';
 import { Combobox, Transition } from '@headlessui/react';
 import { Check, ChevronsDownUp } from 'lucide-react';
-import Link from 'next/link';
 // import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Fragment, useState } from 'react';
 
@@ -47,7 +46,7 @@ export default function DropdownSelect({
             placeholder={placeholder}
           />
           <Combobox.Button className='absolute inset-y-0 right-0 flex items-center pr-2'>
-            <ChevronsDownUp size={20} strokeWidth={1} />
+            <ChevronsDownUp size={20} strokeWidth={1} color='#000000' />
           </Combobox.Button>
         </div>
         <Transition
@@ -57,60 +56,61 @@ export default function DropdownSelect({
           leaveTo='opacity-0'
           afterLeave={() => setQuery('')}
         >
-          <Combobox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm'>
+          <Combobox.Options className='absolute mt-1 max-h-40 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm'>
             {filteredOptions.length === 0 && query !== '' ? (
               <div className='relative cursor-default select-none px-4 py-2 text-gray-700'>
                 Nothing found.
               </div>
             ) : (
               filteredOptions.map((option) => (
-                <Link
+                // <Link
+                //   key={option.id}
+                //   href={option?.href || ''}
+                //   prefetch={false}
+                // >
+                <Combobox.Option
                   key={option.id}
-                  href={option?.href || ''}
-                  prefetch={false}
+                  className={({ active }) =>
+                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                      active
+                        ? 'bg-teal-600 text-white'
+                        : 'bg-white  text-gray-900'
+                    }`
+                  }
+                  value={option}
+                  defaultChecked={option.id === defaultOption?.id}
+                  defaultValue={defaultOption?.id}
+                  style={{
+                    zIndex: 2,
+                  }}
                 >
-                  <Combobox.Option
-                    className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active
-                          ? 'bg-teal-600 text-white'
-                          : 'bg-white  text-gray-900'
-                      }`
-                    }
-                    value={option}
-                    defaultChecked={option.id === defaultOption?.id}
-                    defaultValue={defaultOption?.id}
-                    style={{
-                      zIndex: 2,
-                    }}
-                  >
-                    {(props) => {
-                      const { selected: selectedOption, active } = props;
-                      const selected =
-                        selectedOption || option.id === defaultOption?.id;
-                      return (
-                        <div>
+                  {(props) => {
+                    const { selected: selectedOption, active } = props;
+                    const selected =
+                      selectedOption || option.id === defaultOption?.id;
+                    return (
+                      <div>
+                        <span
+                          className={`block truncate ${
+                            selected ? 'font-medium' : 'font-normal'
+                          }`}
+                        >
+                          {option.value}
+                        </span>
+                        {selected ? (
                           <span
-                            className={`block truncate ${
-                              selected ? 'font-medium' : 'font-normal'
+                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                              active ? 'text-white' : 'text-teal-600'
                             }`}
                           >
-                            {option.value}
+                            <Check size={20} strokeWidth={1} />
                           </span>
-                          {selected ? (
-                            <span
-                              className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                active ? 'text-white' : 'text-teal-600'
-                              }`}
-                            >
-                              <Check size={20} strokeWidth={1} />
-                            </span>
-                          ) : null}
-                        </div>
-                      );
-                    }}
-                  </Combobox.Option>
-                </Link>
+                        ) : null}
+                      </div>
+                    );
+                  }}
+                </Combobox.Option>
+                // </Link>
               ))
             )}
           </Combobox.Options>

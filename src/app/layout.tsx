@@ -81,6 +81,14 @@ export default function RootLayout({
             >
               BMKG
             </a>
+            &nbsp; &&nbsp;
+            <a
+              href='https://kodewilayah.id/'
+              target='_blank'
+              className='hover:text-primary-200 underline underline-offset-1 '
+            >
+              Kode Wilayah
+            </a>
           </span>
         </div>
       </body>

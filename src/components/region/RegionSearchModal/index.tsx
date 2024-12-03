@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import { SquarePen } from 'lucide-react';
 import Link from 'next/link';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import Button from '@/components/buttons/Button';
 import IconButton from '@/components/buttons/IconButton';
@@ -21,6 +21,14 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
   const subRegions = choosenCode?.split('.');
 
   const { isOpenModal, openModal, closeModal } = useModalState();
+
+  const refs = useRef<HTMLDivElement[]>([]);
+
+  const addRef = (el: HTMLDivElement | null) => {
+    if (el && !refs.current.includes(el)) {
+      refs.current.push(el);
+    }
+  };
 
   //TODO: simplify this
   const subRegion2 = subRegions?.[0];
@@ -62,22 +70,24 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
           3: null,
           4: null,
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [choosenCode]
   );
 
-  const onSelect = (v: Option) => {
+  const onSelect = (dropdownKey: number) => (v: Option) => {
     setChoosenCode(v.id);
+    refs.current.forEach((e, i) => {
+      if (dropdownKey < i + 1) {
+        e.value = '';
+      }
+    });
   };
 
   return (
     <>
       <div className='flex gap-3 items-center'>
-        <h3 className='font-medium text-lg'>
-          {regionCode.DATA?.[choosenCode]}
-        </h3>
+        <h3 className='font-medium text-lg'>{regionCode.DATA?.[code]}</h3>
         <IconButton variant='light' icon={SquarePen} onClick={openModal} />
       </div>
       <Modal
@@ -93,16 +103,17 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
         <div>
           <section className='mb-5 max-w-screen-sm'>
             <DropdownSelect
-              onSelect={onSelect}
+              onSelect={onSelect(1)}
               options={options[1]}
               defaultOption={{
                 id: subRegions?.[0] || choosenCode,
                 value: regionCode.DATA?.[subRegions?.[0] || choosenCode],
               }}
+              ref={addRef}
             />
             {!!subRegions?.[0] && (
               <DropdownSelect
-                onSelect={onSelect}
+                onSelect={onSelect(2)}
                 options={options[2]}
                 defaultOption={
                   subRegions?.[1]
@@ -113,11 +124,12 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
                     : undefined
                 }
                 placeholder='Pilih Kabupaten / Kota'
+                ref={addRef}
               />
             )}
             {!!subRegions?.[1] && (
               <DropdownSelect
-                onSelect={onSelect}
+                onSelect={onSelect(3)}
                 options={options[3]}
                 defaultOption={
                   subRegions?.[2]
@@ -128,11 +140,12 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
                     : undefined
                 }
                 placeholder='Pilih Kecamatan'
+                ref={addRef}
               />
             )}
             {!!subRegions?.[2] && (
               <DropdownSelect
-                onSelect={onSelect}
+                onSelect={onSelect(4)}
                 options={options[4]}
                 defaultOption={
                   subRegions?.[3]
@@ -143,6 +156,7 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
                     : undefined
                 }
                 placeholder='Pilih Kelurahan / Desa'
+                ref={addRef}
               />
             )}
           </section>

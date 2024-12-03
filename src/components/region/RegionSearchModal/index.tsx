@@ -24,10 +24,8 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
 
   const refs = useRef<HTMLDivElement[]>([]);
 
-  const addRef = (el: HTMLDivElement | null) => {
-    if (el && !refs.current.includes(el)) {
-      refs.current.push(el);
-    }
+  const addRef = (idx: number) => (el: HTMLDivElement | null) => {
+    refs.current[idx] = el;
   };
 
   //TODO: simplify this
@@ -109,7 +107,7 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
                 id: subRegions?.[0] || choosenCode,
                 value: regionCode.DATA?.[subRegions?.[0] || choosenCode],
               }}
-              ref={addRef}
+              ref={addRef(1)}
             />
             {!!subRegions?.[0] && (
               <DropdownSelect
@@ -124,7 +122,7 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
                     : undefined
                 }
                 placeholder='Pilih Kabupaten / Kota'
-                ref={addRef}
+                ref={addRef(2)}
               />
             )}
             {!!subRegions?.[1] && (
@@ -140,7 +138,7 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
                     : undefined
                 }
                 placeholder='Pilih Kecamatan'
-                ref={addRef}
+                ref={addRef(3)}
               />
             )}
             {!!subRegions?.[2] && (
@@ -156,7 +154,7 @@ const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
                     : undefined
                 }
                 placeholder='Pilih Kelurahan / Desa'
-                ref={addRef}
+                ref={addRef(4)}
               />
             )}
           </section>

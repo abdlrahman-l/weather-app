@@ -38,6 +38,7 @@ const VerticalWeather = ({
         },
         autoplay: false,
       }}
+      playAnimation={isExpanded}
     />
   );
 

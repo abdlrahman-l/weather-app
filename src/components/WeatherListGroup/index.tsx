@@ -1,11 +1,13 @@
 'use client';
 
-import React, { Fragment, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
 import dayjs from '@/lib/date';
-import { FormattedWeather, WeatherResponse } from '@/lib/types';
+import { WeatherResponse } from '@/lib/types';
 
 import VerticalWeather from '@/features/weather/components/VerticalWeather';
+
+import Accordion from '../Accordion';
 
 type WeatherListGroupProps = {
   weatherData: WeatherResponse;
@@ -14,64 +16,66 @@ type WeatherListGroupProps = {
 const WeatherListGroup = ({ weatherData }: WeatherListGroupProps) => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  const grouppedTimeRange = useMemo(
-    () =>
-      weatherData.data?.[0].cuaca
-        .flatMap((d) => d)
-        .reduce<{
-          [key: string]: FormattedWeather[];
-
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
-        }>((acc, curr) => {
-          const date = dayjs(curr.local_datetime);
-          const key = date.format('dddd, D MMMM');
-          return {
-            ...acc,
-            [key]: [
-              ...(acc[key] || []),
-              {
-                dateTime: curr.local_datetime,
-                date: key,
-                humidity: `${curr.hu}%`,
-                windSpeed: `${curr.ws} km/j`,
-                windDirection: `${curr.wd}-${curr.wd_to}`,
-                weatherUnit: curr.weather,
-                temp: `${curr.t} °C`,
-                details: curr.weather_desc,
-              },
-            ],
-          };
-        }, {}),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
   return (
     <div className='mt-5'>
-      {Object.keys(grouppedTimeRange).map((t) => (
-        <Fragment key={t}>
-          <h4 className='text-sm'>{t}</h4>
-          <div className='flex flex-nowrap overflow-x-auto space-x-4 py-5 no-scrollbar'>
-            {grouppedTimeRange[t].map((w) => (
-              <div key={w.dateTime} onClick={() => setExpandedId(w.dateTime)}>
-                <VerticalWeather
-                  unit={w.weatherUnit}
-                  time={w.dateTime}
-                  temperature={w.temperature}
-                  date={w.date}
-                  windSpeed={w.windSpeed}
-                  humidity={w.humidity}
-                  windDirection={w.windDirection}
-                  temp={w.temp}
-                  details={w.details}
-                  isExpanded={w.dateTime === expandedId}
-                />
-              </div>
-            ))}
-          </div>
-        </Fragment>
-      ))}
+      <Accordion
+        items={weatherData.data.map((d) => {
+          const title =
+            d.lokasi?.desa ||
+            d.lokasi?.kecamatan ||
+            d.lokasi?.kotkab ||
+            d.lokasi?.kota ||
+            '';
+          return {
+            title,
+            content: (
+              <>
+                {d.cuaca.map((weatherList, i) => {
+                  return (
+                    <React.Fragment key={i}>
+                      <h4 className='text-sm'>
+                        {dayjs(weatherList[0].local_datetime).format(
+                          'dddd, D MMMM'
+                        )}
+                      </h4>
+                      <div className='flex flex-nowrap overflow-x-auto space-x-4 py-5 no-scrollbar'>
+                        {weatherList.map((c) => {
+                          const date = dayjs(c.local_datetime);
+                          const key = date.format('dddd, D MMMM');
+
+                          return (
+                            <div
+                              key={c.local_datetime}
+                              onClick={() =>
+                                setExpandedId(`${c.local_datetime}-${title}`)
+                              }
+                            >
+                              <VerticalWeather
+                                unit={c.weather}
+                                time={c.local_datetime}
+                                // temperature={c.temperature}
+                                date={key}
+                                windSpeed={`${c.ws} km/j`}
+                                humidity={`${c.hu}%`}
+                                windDirection={`${c.wd}-${c.wd_to}`}
+                                temp={`${c.t} °C`}
+                                details={c.weather_desc}
+                                isExpanded={
+                                  `${c.local_datetime}-${title}` === expandedId
+                                }
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
+              </>
+            ),
+          };
+        })}
+      />
     </div>
   );
 };

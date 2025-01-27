@@ -1,4 +1,5 @@
 import { Transition } from '@headlessui/react';
+import { Search } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
@@ -29,13 +30,13 @@ const Content = ({
 }) => {
   if (query.length < 3) {
     return (
-      <div className='flex items-center justify-center'>
+      <div className='flex items-center justify-center text-center text-sm'>
         <p>Ketik minimal 3 karakter untuk melakukan pencarian</p>
       </div>
     );
   } else if (isLoading) {
     return (
-      <div className='flex items-center justify-center'>
+      <div className='flex justify-center'>
         <LoadingSpinner />
       </div>
     );
@@ -56,7 +57,7 @@ const Content = ({
     );
   } else {
     return (
-      <div className='flex items-center justify-center'>
+      <div className='flex items-center justify-center text-sm'>
         <p>Pencarian tidak ditemukan</p>
       </div>
     );
@@ -81,19 +82,20 @@ const SearchDropdown = ({
   }, [query]);
 
   return (
-    <>
-      <input
-        type='text'
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        className='mt-1 block w-full p-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-      invalid:border-pink-500 invalid:text-pink-600
-      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
-    '
-        placeholder={placeholder}
-      />
+    <div className='w-72'>
+      <div className='relative mb-2'>
+        <div className='absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none'>
+          <Search width={18} height={18} />
+        </div>
+        <input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder={placeholder}
+          type='text'
+          id='input-group-1'
+          className='text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-9 p-2.5 '
+        />
+      </div>
 
       <Transition
         show={!!value}
@@ -104,11 +106,11 @@ const SearchDropdown = ({
         leaveFrom='opacity-100'
         leaveTo='opacity-0'
       >
-        <div className='rounded-lg shadow-md mt-1 min-h-20 max-h-52 overflow-y-scroll'>
+        <div className='rounded-lg shadow-md mt-1 min-h-20 max-h-52 overflow-y-scroll absolute z-10 bg-white w-72'>
           <Content query={query} options={options} isLoading={isLoading} />
         </div>
       </Transition>
-    </>
+    </div>
   );
 };
 

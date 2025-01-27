@@ -1,45 +1,50 @@
 'use client';
-import { Search, SquarePen } from 'lucide-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import IconButton from '@/components/buttons/IconButton';
+import SearchDropdown, { Option } from '@/components/SearchDropdown';
 
-import regionCode from '@/constant/kode-wilayah.json';
-import useModalState from '@/helpers/hooks/useModalState';
-
-import SearchAreaAdmModal from './SearchAreaAdmModal';
-import SearchAreaModal from './SearchAreaModal';
+// import regionCode from '@/constant/kode-wilayah.json';
 
 type RegionSearchModalProps = {
-  code: keyof (typeof regionCode)['DATA'];
+  code: string;
 };
 
 const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
-  const { isOpenModal, openModal, closeModal } = useModalState();
-  const {
-    isOpenModal: isOpenSearchModal,
-    openModal: openSearchModal,
-    closeModal: closeSearchModal,
-  } = useModalState();
+  const [areaResult, setAreaResult] = useState<string>();
+  const [searchResult, setSearchResult] = useState<Option[] | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onChangeQuery = async (s: string) => {
+    const res = await fetch(`/api/search?query=${s}`);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setSearchResult(((await res.json()) as any)?.data);
+  };
+
+  useEffect(() => {
+    const fetchArea = async () => {
+      setIsLoading(true);
+      const res = await fetch(`/api/search/${code}`);
+
+      setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data = (await res.json())?.data;
+      setAreaResult(data);
+    };
+
+    fetchArea();
+  }, [code]);
 
   return (
-    <>
-      <div className='flex gap-3 items-center'>
-        <h3 className='font-medium text-lg'>{regionCode.DATA?.[code]}</h3>
-        <IconButton variant='light' icon={SquarePen} onClick={openModal} />
-        <IconButton variant='light' icon={Search} onClick={openSearchModal} />
-      </div>
-      <SearchAreaAdmModal
-        isOpenModal={isOpenModal}
-        closeModal={closeModal}
-        code={code}
-      />
-      <SearchAreaModal
-        isOpenModal={isOpenSearchModal}
-        closeModal={closeSearchModal}
-        code={code}
-      />
-    </>
+    <div className='text-black'>
+      <section className='mb-5 max-w-screen-sm'>
+        <SearchDropdown
+          onChangeQuery={onChangeQuery}
+          options={searchResult}
+          isLoading={isLoading}
+          placeholder={areaResult}
+        />
+      </section>
+    </div>
   );
 };
 

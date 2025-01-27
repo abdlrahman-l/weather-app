@@ -140,7 +140,7 @@ interface Cuaca {
   local_datetime: string;
 }
 
-interface DataItem {
+export interface DataItem {
   lokasi: Lokasi;
   cuaca: Cuaca[][];
 }

@@ -24,7 +24,7 @@ export async function generateStaticParams() {
   }, []);
 }
 
-export const revalidate = 86400;
+export const revalidate = 3600;
 
 const getWeatherData = async (query: string) => {
   const url = `${weatherBaseUrl}?${query}`;

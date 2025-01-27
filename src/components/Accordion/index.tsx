@@ -40,7 +40,7 @@ const Accordion: React.FC<{ items: AccordionItem[] }> = ({ items }) => {
           <h3 className='text-lg font-medium'>{item.title}</h3>
           {isActive ? <ChevronUp /> : <ChevronDown />}
         </div>
-        {isActive ? content : null}
+        {isActive ? <div className='px-3'>{content}</div> : null}
       </div>
     );
   });

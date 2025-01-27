@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3030",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3030",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && pnpm format",
     "lint:strict": "eslint --max-warnings=0 src",
@@ -16,10 +16,12 @@
     "format:check": "prettier -c .",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "prepare": "husky install",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "analyze": "ANALYZE=true pnpm build"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",
+    "@next/bundle-analyzer": "^15.1.6",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.11",
     "leaflet": "^1.9.4",

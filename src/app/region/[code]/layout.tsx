@@ -4,8 +4,6 @@ import { ReactNode } from 'react';
 import RegionSearchModal from '@/components/region/RegionSearchModal';
 import WeatherProvider from '@/components/WeatherProvider';
 
-import regionCode from '@/constant/kode-wilayah.json';
-
 /**
  * Default metadata.
  *
@@ -26,7 +24,7 @@ export default function WeatherLayout({
   params,
 }: {
   children: ReactNode;
-  params: { code: keyof (typeof regionCode)['DATA'] };
+  params: { code: string };
 }) {
   return (
     <WeatherProvider>

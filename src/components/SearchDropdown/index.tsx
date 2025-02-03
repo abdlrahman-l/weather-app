@@ -44,7 +44,7 @@ const Content = ({
     return (
       <ul>
         {options?.map((o) => (
-          <Link prefetch={false} href={o.href || ''} key={o.id}>
+          <Link prefetch={false} href={`/region/${o.id}`} key={o.id}>
             <li
               className='px-3 py-1 hover:bg-primary-100 cursor-pointer text-sm text-dark'
               key={o.id}

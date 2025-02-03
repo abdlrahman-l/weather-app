@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import SearchDropdown, { Option } from '@/components/SearchDropdown';
 
@@ -7,43 +7,31 @@ import SearchDropdown, { Option } from '@/components/SearchDropdown';
 
 type RegionSearchModalProps = {
   code: string;
+  placeholder: string;
 };
 
-const RegionSearchModal = ({ code }: RegionSearchModalProps) => {
-  const [areaResult, setAreaResult] = useState<string>();
+const RegionSearchModal = ({ placeholder }: RegionSearchModalProps) => {
+  // const [areaResult, setAreaResult] = useState<string>();
   const [searchResult, setSearchResult] = useState<Option[] | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
   const onChangeQuery = async (s: string) => {
+    setIsLoading(true);
     const res = await fetch(`/api/search?query=${s}`);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setSearchResult(((await res.json()) as any)?.data);
+    const data = ((await res.json()) as any)?.data;
+    setIsLoading(false);
+    setSearchResult(data);
   };
-
-  useEffect(() => {
-    const fetchArea = async () => {
-      setIsLoading(true);
-      const res = await fetch(`/api/search/${code}`);
-
-      setIsLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const data = (await res.json())?.data;
-      setAreaResult(data);
-    };
-
-    fetchArea();
-  }, [code]);
 
   return (
     <div className='text-black'>
-      <section className='mb-5 max-w-screen-sm'>
-        <SearchDropdown
-          onChangeQuery={onChangeQuery}
-          options={searchResult}
-          isLoading={isLoading}
-          placeholder={areaResult}
-        />
-      </section>
+      <SearchDropdown
+        onChangeQuery={onChangeQuery}
+        options={searchResult}
+        isLoading={isLoading}
+        placeholder={placeholder}
+      />
     </div>
   );
 };

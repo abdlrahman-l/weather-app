@@ -82,7 +82,7 @@ const SearchDropdown = ({
   }, [query]);
 
   return (
-    <div className='w-72'>
+    <div className='w-full md:w-72'>
       <div className='relative mb-2'>
         <div className='absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none'>
           <Search width={18} height={18} />
@@ -106,7 +106,7 @@ const SearchDropdown = ({
         leaveFrom='opacity-100'
         leaveTo='opacity-0'
       >
-        <div className='rounded-lg shadow-md mt-1 min-h-20 max-h-52 overflow-y-scroll absolute z-10 bg-white w-72'>
+        <div className='rounded-lg shadow-md mt-1 min-h-20 max-h-52 overflow-y-scroll absolute z-10 bg-white w-11/12 md:w-72'>
           <Content query={query} options={options} isLoading={isLoading} />
         </div>
       </Transition>

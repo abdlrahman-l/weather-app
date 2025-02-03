@@ -12,38 +12,42 @@ export async function GET(request: NextRequest) {
   try {
     let filteredAreas;
     if (query) {
-      filteredAreas = Object.keys(area).reduce(
-        (acc, curr: keyof typeof area) => {
-          if (!area[curr].toLowerCase().includes(query)) {
-            return acc;
+      filteredAreas = [];
+      const areaKeys = Object.keys(area);
+
+      for (let i = 0; i < areaKeys.length; i++) {
+        const curr = areaKeys[i] as keyof typeof area;
+
+        if (filteredAreas.length >= 25) {
+          break;
+        }
+
+        if (!area[curr].toLowerCase().includes(query)) {
+          continue;
+        }
+
+        const subArea = curr?.split('.');
+
+        if (subArea.length > 0) {
+          subArea.pop();
+        }
+
+        let areaName = '';
+        for (let j = 0; j < subArea.length; j++) {
+          if (j === 0) {
+            areaName = subArea[j];
+          } else {
+            areaName = `${areaName}.${subArea[j]}`;
           }
+        }
 
-          const subArea = curr?.split('.');
-
-          if (subArea.length > 0) {
-            subArea.pop();
-          }
-
-          const areaName = subArea?.reduce((acc, curr, i) => {
-            if (i === 0) {
-              return curr;
-            }
-            return `${acc}.${curr}`;
-          }, '');
-
-          return [
-            ...acc,
-            {
-              id: curr,
-              value: `${area[curr]}${
-                subArea.length > 0 ? `, ${area[areaName]}` : ''
-              }`,
-              href: `/region/${curr}`,
-            },
-          ];
-        },
-        []
-      );
+        filteredAreas.push({
+          id: curr,
+          value: `${area[curr]}${
+            subArea.length > 0 ? `, ${area[areaName]}` : ''
+          }`,
+        });
+      }
     }
 
     return NextResponse.json({

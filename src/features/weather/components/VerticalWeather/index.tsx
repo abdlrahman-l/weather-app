@@ -6,7 +6,7 @@ import LottieAnimation from '@/components/LottieAnimation';
 
 import WeatherDetails from './WeatherDetails';
 import useLottieSourceFile from '../../hooks/useLottieSourceFile';
-import { getPrimaryColor, WeatherProps } from '../../utils/color';
+import { getWeatherGradient, WeatherProps } from '../../utils/color';
 
 const VerticalWeather = ({
   unit,
@@ -22,9 +22,7 @@ const VerticalWeather = ({
   //   const { isOpenModal, openModal, closeModal } = useModalState();
 
   const lottieNameFile = useLottieSourceFile(time, unit);
-
-  const primaryColor = getPrimaryColor({ time, unit });
-  const bgColor = primaryColor?.split?.('-');
+  const bgColor = getWeatherGradient({ time, unit });
   const formattedHours = dayjs(time).format('HH:mm');
 
   const lottie = (
@@ -46,8 +44,9 @@ const VerticalWeather = ({
     <div
       className={clsx(
         'min-w-20 min-h-20 lg:min-h-[300px] flex flex-col justify-between items-center shadow-lg rounded-lg p-3 cursor-pointer',
-        `${bgColor?.[0]}`,
-        `bg-primary-${bgColor?.[1]} text-white whitespace-nowrap`,
+        // `${bgColor?.[0]}`,
+        bgColor,
+        ` text-white whitespace-nowrap`,
         isExpanded && 'min-w-[300px]',
         'transition-all duration-700 ease-in-out overflow-hidden '
       )}

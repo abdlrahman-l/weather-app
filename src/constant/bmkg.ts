@@ -51,7 +51,7 @@ export const weatherCodeNightFile = {
   17: 'hujanPetir',
 };
 
-export const weatherColorCode = {
+export const weatherColorCode: Record<number, string> = {
   0: 'sky-400',
   1: 'sky-200',
   2: 'sky-800',
@@ -66,12 +66,11 @@ export const weatherColorCode = {
   80: 'gray-500',
   95: 'gray-500',
   97: 'slate-800',
-  17: 'gray-500',
 };
 
-export const nightColorCode = 'sky-900';
-export const eveningColorCode = 'sky-700';
 export const morningColorCode = 'sky-500';
+export const eveningColorCode = 'sky-700';
+export const nightColorCode = 'sky-900';
 
 export const windDirectionCode: Record<string, string> = {
   N: 'Utara',

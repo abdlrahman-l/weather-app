@@ -9,7 +9,7 @@ import dayjs from '@/lib/date';
 import useModalState from '@/helpers/hooks/useModalState';
 
 import useLottieSourceFile from '../../hooks/useLottieSourceFile';
-import { getPrimaryColor, WeatherProps } from '../../utils/color';
+import { getWeatherGradient, WeatherProps } from '../../utils/color';
 import LottieAnimation from '../../../../components/LottieAnimation';
 import Modal from '../../../../components/Modal';
 
@@ -33,8 +33,10 @@ const Weather = ({
 
   const lottieNameFile = useLottieSourceFile(time, unit);
 
-  const primaryColor = getPrimaryColor({ time, unit });
-  const bgColor = primaryColor?.split?.('-');
+  // const primaryColor = getPrimaryColor({ time, unit });
+  // const bgColor = primaryColor?.split?.('-');
+
+  const bgColor = getWeatherGradient({ time, unit });
   const formattedHours = dayjs(time).format('HH:mm');
 
   return (
@@ -43,8 +45,9 @@ const Weather = ({
         onClick={openModal}
         className={clsx(
           'h-20 flex justify-between items-center shadow-lg rounded-lg p-3 cursor-pointer',
-          `${bgColor?.[0]}`,
-          `bg-primary-${bgColor?.[1]}`,
+          // `${bgColor?.[0]}`,
+          // `bg-primary-${bgColor?.[1]}`,
+          bgColor,
           'transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300'
         )}
       >

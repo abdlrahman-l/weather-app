@@ -82,7 +82,7 @@ const GeolocationButton = () => {
     queryKey: [coordinate.lat, coordinate.lon],
     queryFn: async () => {
       const res = fetch(
-        `/api/code?lat=${coordinate.lat}&lon=${coordinate.lon}asdasdas`
+        `/api/code?lat=${coordinate.lat}&lon=${coordinate.lon}`
       );
       return (await res).json();
     },

@@ -23,6 +23,7 @@
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^15.1.6",
     "@radix-ui/react-slot": "^1.2.0",
+    "@radix-ui/react-toast": "^1.2.11",
     "@tanstack/react-query": "^5.74.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.0",

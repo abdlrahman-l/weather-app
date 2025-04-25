@@ -2,7 +2,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useToast } from '@/hooks/use-toast';
+
+import { ToastAction } from '@/components/ui/toast';
 
 import IconButton from '../buttons/IconButton';
 
@@ -65,6 +69,7 @@ function getLocation(options = {}) {
 }
 
 const GeolocationButton = () => {
+  const { toast } = useToast();
   const router = useRouter();
   const [coordinate, setCoordinate] = useState<{
     lat: number | null;
@@ -73,11 +78,11 @@ const GeolocationButton = () => {
     lat: null,
     lon: null,
   });
-  const { data } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: [coordinate.lat, coordinate.lon],
     queryFn: async () => {
       const res = fetch(
-        `/api/code?lat=${coordinate.lat}&lon=${coordinate.lon}`
+        `/api/code?lat=${coordinate.lat}&lon=${coordinate.lon}asdasdas`
       );
       return (await res).json();
     },
@@ -85,21 +90,41 @@ const GeolocationButton = () => {
   });
 
   const onClickButton = () => {
-    getLocation().then(({ lat, lon }) => {
-      setCoordinate({
-        lat,
-        lon,
+    getLocation()
+      .then(({ lat, lon }) => {
+        setCoordinate({
+          lat,
+          lon,
+        });
+      })
+      .catch((error) => {
+        toast({
+          variant: 'destructive',
+          title: 'Failed to get location data',
+          description: error.message,
+          action: (
+            <ToastAction altText='Try again' onClick={() => refetch()}>
+              Try again
+            </ToastAction>
+          ),
+        });
       });
-    });
-    // .catch(error => {
-    // console.error("Error getting coordinates:", error.message);
-    //todo handle error
-    // Handle errors here
-    // });
   };
 
-  if (data) {
-    router.replace(data.data);
+  useEffect(() => {
+    if (isError || data?.success === false) {
+      toast({
+        variant: 'destructive',
+        title: 'Failed to get location data.',
+        description: data.message,
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isError, data?.success]);
+
+  if (data?.success) {
+    router.replace(data?.data);
   }
 
   return (
@@ -109,6 +134,7 @@ const GeolocationButton = () => {
       className='rounded-lg p-2'
       iconSize='25px'
       onClick={onClickButton}
+      isLoading={isLoading}
     />
   );
 };

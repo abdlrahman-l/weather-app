@@ -5,6 +5,8 @@ import * as React from 'react';
 
 import '@/styles/globals.css';
 
+import { Toaster } from '@/components/ui/toaster';
+
 // import 'leaflet/dist/leaflet.css';
 import { siteConfig } from '@/constant/config';
 
@@ -69,6 +71,7 @@ export default function RootLayout({
         <main className='w-full p-5 m-auto relative min-h-screen max-w-screen-sm'>
           {children}
         </main>
+        <Toaster />
         <div className='sticky bottom-0 left-0 bg-white'>
           <span>
             source: &nbsp;

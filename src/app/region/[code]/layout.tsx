@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { ReactNode, Suspense } from 'react';
 
+import GeolocationButton from '@/components/GeolocationButton';
 import RegionSearchModal from '@/components/region/RegionSearchModal';
 import Skeleton from '@/components/Skeleton';
 import WeatherProvider from '@/components/WeatherProvider';
 
 import { repoApiUrl } from '@/constant/env';
+import Providers from '@/query/provider';
 
 /**
  * Default metadata.
@@ -38,14 +40,17 @@ export default function WeatherLayout({
   params: { code: string };
 }) {
   return (
-    <WeatherProvider>
-      {/* <RegionSearchModal code={params.code} /> */}
-      <section className='mb-5 max-w-screen-sm'>
-        <Suspense fallback={<Skeleton className='h-10 w-72 rounded-lg' />}>
-          <SearchLayout code={params.code} />
-        </Suspense>
-      </section>
-      {children}
-    </WeatherProvider>
+    <Providers>
+      <WeatherProvider>
+        {/* <RegionSearchModal code={params.code} /> */}
+        <section className='mb-5 max-w-screen-sm w-full flex flex-nowrap space-x-2 items-center justify-center'>
+          <Suspense fallback={<Skeleton className='h-10 w-full rounded-lg' />}>
+            <SearchLayout code={params.code} />
+            <GeolocationButton />
+          </Suspense>
+        </section>
+        {children}
+      </WeatherProvider>
+    </Providers>
   );
 }

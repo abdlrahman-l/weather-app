@@ -22,7 +22,10 @@
   "dependencies": {
     "@headlessui/react": "^1.7.19",
     "@next/bundle-analyzer": "^15.1.6",
-    "clsx": "^2.0.0",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@tanstack/react-query": "^5.74.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.0",
     "dayjs": "^1.11.11",
     "leaflet": "^1.9.4",
     "lottie-react": "^2.4.0",
@@ -33,7 +36,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
     "react-leaflet": "^4.2.1",
-    "tailwind-merge": "^2.1.0",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
   },
   "devDependencies": {

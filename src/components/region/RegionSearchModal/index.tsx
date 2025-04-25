@@ -1,31 +1,37 @@
 'use client';
-import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 
 import SearchDropdown, { Option } from '@/components/SearchDropdown';
-
-// import regionCode from '@/constant/kode-wilayah.json';
 
 type RegionSearchModalProps = {
   code: string;
   placeholder: string;
 };
 
-const RegionSearchModal = ({ placeholder }: RegionSearchModalProps) => {
-  // const [areaResult, setAreaResult] = useState<string>();
-  const [searchResult, setSearchResult] = useState<Option[] | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
+const fetchRegions = async (query: string) => {
+  const res = await fetch(`/api/search?query=${query}`);
+  const data = await res.json();
+  return data?.data as Option[];
+};
 
-  const onChangeQuery = async (s: string) => {
-    setIsLoading(true);
-    const res = await fetch(`/api/search?query=${s}`);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const data = ((await res.json()) as any)?.data;
-    setIsLoading(false);
-    setSearchResult(data);
+const RegionSearchModal = ({ placeholder }: RegionSearchModalProps) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const { data: searchResult, isLoading } = useQuery({
+    queryKey: ['regions', searchQuery],
+    queryFn: () => fetchRegions(searchQuery),
+    enabled: searchQuery.length > 0,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const onChangeQuery = (s: string) => {
+    setSearchQuery(s);
   };
 
   return (
-    <div className='text-black'>
+    <div className='text-black w-full'>
       <SearchDropdown
         onChangeQuery={onChangeQuery}
         options={searchResult}

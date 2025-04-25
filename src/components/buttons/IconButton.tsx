@@ -21,6 +21,7 @@ type IconButtonProps = {
   classNames?: {
     icon?: string;
   };
+  iconSize?: string;
 } & React.ComponentPropsWithRef<'button'>;
 
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -33,6 +34,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       isDarkBg = false,
       icon: Icon,
       classNames,
+      iconSize,
       ...rest
     },
     ref
@@ -107,7 +109,9 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
             <ImSpinner2 className='animate-spin' />
           </div>
         )}
-        {Icon && <Icon size='1em' className={cn(classNames?.icon)} />}
+        {Icon && (
+          <Icon size={iconSize || '1em'} className={cn(classNames?.icon)} />
+        )}
       </button>
     );
   }

@@ -66,7 +66,7 @@ export default function RootLayout({
     <html className={lato.className}>
       <body>
         <NextTopLoader showSpinner={false} />
-        <main className='w-full p-5 m-auto relative min-h-screen'>
+        <main className='w-full p-5 m-auto relative min-h-screen max-w-screen-sm'>
           {children}
         </main>
         <div className='sticky bottom-0 left-0 bg-white'>

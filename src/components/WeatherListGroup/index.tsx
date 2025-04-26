@@ -37,9 +37,7 @@ const FormattedWeather = ({
   d: DataItem;
   isExpanded: boolean;
 }) => {
-  const [tab, setTab] = useState(
-    dayjs(d.cuaca[0][0].local_datetime).format('dddd, D MMMM')
-  );
+  const [tab, setTab] = useState(d.cuaca[0][0].local_datetime);
 
   return (
     <>
@@ -51,12 +49,11 @@ const FormattedWeather = ({
       >
         <TabsList>
           {d.cuaca.map((weatherList) => {
-            const formattedTitle = dayjs(weatherList[0].local_datetime).format(
-              'dddd, D MMMM'
-            );
+            const dateTime = weatherList[0].local_datetime;
+            const formattedTitle = dayjs(dateTime).format('D MMMM');
 
             return (
-              <TabsTrigger value={formattedTitle} key={formattedTitle}>
+              <TabsTrigger value={dateTime} key={dateTime}>
                 {formattedTitle}
               </TabsTrigger>
             );
@@ -66,17 +63,16 @@ const FormattedWeather = ({
           const formattedTitle = dayjs(weatherList[0].local_datetime).format(
             'dddd, D MMMM'
           );
-
+          const dateTime = weatherList[0].local_datetime;
           return (
-            <TabsContent value={formattedTitle} key={formattedTitle}>
+            <TabsContent value={dateTime} key={dateTime}>
               {d.cuaca.map((weatherList, i) => {
                 return (
                   <CarouselComp key={i}>
                     {weatherList.map((c) => {
                       const date = dayjs(c.local_datetime);
-                      const key = date.format('dddd, D MMMM');
 
-                      if (formattedTitle !== key) {
+                      if (formattedTitle !== date.format('dddd, D MMMM')) {
                         return null;
                       }
 
@@ -89,7 +85,7 @@ const FormattedWeather = ({
                             unit={c.weather}
                             time={c.local_datetime}
                             // temperature={c.temperature}
-                            date={key}
+                            date={date.format('dddd, D MMMM')}
                             windSpeed={`${c.ws} km/j`}
                             humidity={`${c.hu}%`}
                             windDirection={`${c.wd}-${c.wd_to}`}

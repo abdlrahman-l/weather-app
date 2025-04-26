@@ -19,8 +19,6 @@ const VerticalWeather = ({
   details,
   isExpanded,
 }: WeatherProps) => {
-  //   const { isOpenModal, openModal, closeModal } = useModalState();
-
   const lottieNameFile = useLottieSourceFile(time, unit);
   const bgColor = getWeatherGradient({ time, unit });
   const formattedHours = dayjs(time).format('HH:mm');
@@ -43,11 +41,10 @@ const VerticalWeather = ({
   return (
     <div
       className={clsx(
-        'min-w-20 min-h-20 lg:min-h-[300px] flex flex-col justify-between items-center shadow-lg rounded-lg p-3 cursor-pointer',
-        // `${bgColor?.[0]}`,
+        'min-w-20 min-h-14 lg:min-h-[300px] flex flex-col justify-between items-center shadow-lg rounded-lg p-3 cursor-pointer',
         bgColor,
         ` text-white whitespace-nowrap`,
-        isExpanded && 'min-w-[300px]',
+        isExpanded && 'min-w-[250px]',
         'transition-all duration-700 ease-in-out overflow-hidden '
       )}
     >

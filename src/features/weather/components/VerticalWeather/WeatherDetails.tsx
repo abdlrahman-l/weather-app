@@ -25,7 +25,7 @@ const WeatherDetails = ({
 }: WeatherDetailsProps) => {
   return (
     <>
-      <div className='flex justify-between items-center  w-full'>
+      <div className='flex justify-between items-center w-full'>
         <h6 className='font-medium text-lg'>{date}</h6>
         <h6 className='font-bold text-xl lg:text-2xl'>{formattedHours}</h6>
       </div>
@@ -45,7 +45,7 @@ const WeatherDetails = ({
         >
           <Droplets color='#FFFFFF' />
           <h6 className='font-bold'>{humidity}</h6>
-          <h6 className='font-medium'>Kelembapan</h6>
+          {/* <h6 className='font-medium'>Kelembapan</h6> */}
         </div>
         {windDirection && (
           <>
@@ -57,7 +57,7 @@ const WeatherDetails = ({
             >
               <Compass color='#FFFFFF' />
               <h6 className='font-bold'>{windDirection}</h6>
-              <h6 className='font-medium'>Arah Angin</h6>
+              {/* <h6 className='font-medium'>Arah Angin</h6> */}
             </div>
           </>
         )}
@@ -69,7 +69,7 @@ const WeatherDetails = ({
         >
           <Wind color='#FFFFFF' />
           <h6 className='font-bold'>{windSpeed}</h6>
-          <h6 className='font-medium '>Kec. Angin</h6>
+          {/* <h6 className='font-medium '>Kec. Angin</h6> */}
         </div>
       </div>
     </>

@@ -26,24 +26,9 @@ export async function GET(request: NextRequest) {
           continue;
         }
 
-        const subArea = curr?.split('.');
-
-        if (subArea.length > 0) {
-          subArea.pop();
-        }
-
-        let areaName = '';
-        for (let j = 0; j < subArea.length; j++) {
-          if (j === 0) {
-            areaName = subArea[j];
-          } else {
-            areaName = `${areaName}.${subArea[j]}`;
-          }
-        }
-
         filteredAreas.push({
           id: curr,
-          value: `${area[curr]}`,
+          value: area[curr],
         });
       }
     }

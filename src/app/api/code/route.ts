@@ -22,10 +22,11 @@ export async function GET(request: NextRequest) {
 
       const villageOrSuburb = (data.village || data.suburb || '').toLowerCase();
 
-      const code = areaKeys.find((a) => {
-        const areaVal = (area[a] as string)?.toLowerCase?.();
-
-        return areaVal.includes(villageOrSuburb);
+      const code = areaKeys.find((key) => {
+        const areaName = (
+          area[key as keyof typeof area] as string
+        )?.toLowerCase();
+        return areaName.includes(villageOrSuburb);
       });
 
       return NextResponse.json({

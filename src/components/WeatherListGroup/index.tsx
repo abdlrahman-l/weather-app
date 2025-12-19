@@ -61,7 +61,7 @@ const FormattedWeather = ({
         </TabsList>
         {d.cuaca.map((weatherList) => {
           const formattedTitle = dayjs(weatherList[0].local_datetime).format(
-            'dddd, D MMMM'
+            'dddd, D MMMM',
           );
           const dateTime = weatherList[0].local_datetime;
           return (

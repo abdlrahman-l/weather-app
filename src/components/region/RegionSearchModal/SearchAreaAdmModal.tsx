@@ -66,10 +66,10 @@ const SearchAreaAdmModal = ({
           2: null,
           3: null,
           4: null,
-        }
+        },
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [choosenCode]
+    [choosenCode],
   );
 
   const onSelect = (dropdownKey: number) => (v: Option) => {
@@ -87,7 +87,7 @@ const SearchAreaAdmModal = ({
       onClose={closeModal}
       containerClassname={clsx(
         'min-h-[350px] min-w-38 bg-white',
-        'flex flex-col justify-between'
+        'flex flex-col justify-between',
         // `${bgColor?.[0]}`,
         // `bg-primary-${bgColor?.[1]}`
       )}

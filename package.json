@@ -1,5 +1,5 @@
 {
-  "name": "ts-nextjs-tailwind-starter",
+  "name": "weather-next-v16",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -34,10 +34,10 @@
     "leaflet": "^1.9.4",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.365.0",
-    "next": "^14.2.15",
+    "next": "^16.0.0",
     "nextjs-toploader": "^3.7.15",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-icons": "^4.12.0",
     "react-intersection-observer": "^9.16.0",
     "react-leaflet": "^4.2.1",
@@ -48,18 +48,18 @@
   "devDependencies": {
     "@commitlint/cli": "^16.3.0",
     "@commitlint/config-conventional": "^16.2.4",
-    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/forms": "^0.5.7",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@types/leaflet": "^1.9.12",
-    "@types/react": "^18.2.45",
+    "@types/react": "^19.0.0",
     "@types/testing-library__jest-dom": "^5.14.9",
+    "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^14.0.4",
+    "eslint-config-next": "15.1.2",
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
@@ -69,10 +69,10 @@
     "next-router-mock": "^0.9.0",
     "next-sitemap": "^2.5.28",
     "postcss": "^8.4.32",
-    "prettier": "^2.8.8",
-    "prettier-plugin-tailwindcss": "^0.5.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.0",
     "tailwindcss": "^3.3.6",
-    "typescript": "^4.9.5"
+    "typescript": "^5.7.0"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [

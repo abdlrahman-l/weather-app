@@ -32,7 +32,7 @@ export const getProvinceList = async (): Promise<
 };
 
 export const getProvinceWeather = async (
-  provinceId: string
+  provinceId: string,
 ): Promise<{
   formattedData: FormattedArea[];
 } | null> => {
@@ -79,7 +79,7 @@ export const getProvinceWeather = async (
 };
 
 export const getProvinceDescriptionId = async (
-  provinceId: string
+  provinceId: string,
 ): Promise<{
   areaList: Area[];
 } | null> => {

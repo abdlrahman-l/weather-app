@@ -43,9 +43,7 @@ export async function GET(request: NextRequest) {
 
         filteredAreas.push({
           id: curr,
-          value: `${area[curr]}${
-            subArea.length > 0 ? `, ${area[areaName]}` : ''
-          }`,
+          value: `${area[curr]}`,
         });
       }
     }
@@ -65,7 +63,7 @@ export async function GET(request: NextRequest) {
         data: null,
         message: 'Failed to fetch area',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

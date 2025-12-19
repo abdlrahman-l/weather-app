@@ -32,20 +32,21 @@ const SearchLayout = async ({ code }: { code: string }) => {
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/layout
  */
-export default function WeatherLayout({
+export default async function WeatherLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: { code: string };
+  params: Promise<{ code: string }>;
 }) {
+  const { code } = await params;
   return (
     <Providers>
       <WeatherProvider>
-        {/* <RegionSearchModal code={params.code} /> */}
+        {/* <RegionSearchModal code={code} /> */}
         <section className='mb-5 max-w-screen-sm w-full flex flex-nowrap space-x-2 items-center justify-center'>
           <Suspense fallback={<Skeleton className='h-10 w-full rounded-lg' />}>
-            <SearchLayout code={params.code} />
+            <SearchLayout code={code} />
             <GeolocationButton />
           </Suspense>
         </section>

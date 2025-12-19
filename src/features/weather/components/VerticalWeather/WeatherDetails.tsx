@@ -40,7 +40,7 @@ const WeatherDetails = ({
       <div className='flex space-x-3 md:space-x-5 justify-center items-center mt-5 text-xs'>
         <div
           className={clsx(
-            'p-2 flex flex-col justify-center items-center space-y-1'
+            'p-2 flex flex-col justify-center items-center space-y-1',
           )}
         >
           <Droplets color='#FFFFFF' />
@@ -52,7 +52,7 @@ const WeatherDetails = ({
             <div className='border-l border-white h-24' />
             <div
               className={clsx(
-                'p-2 flex flex-col justify-center items-center space-y-1'
+                'p-2 flex flex-col justify-center items-center space-y-1',
               )}
             >
               <Compass color='#FFFFFF' />
@@ -64,7 +64,7 @@ const WeatherDetails = ({
         <div className='border-l border-white h-24' />
         <div
           className={clsx(
-            'p-2 flex flex-col justify-center items-center space-y-1'
+            'p-2 flex flex-col justify-center items-center space-y-1',
           )}
         >
           <Wind color='#FFFFFF' />

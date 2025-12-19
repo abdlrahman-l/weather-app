@@ -15,30 +15,17 @@ export async function GET(request: NextRequest) {
   try {
     if (lat && lon) {
       const location = await fetch(
-        `https://nominatim.openstreetmap.org/reverse.php?lat=${lat}&lon=${lon}&zoom=18&format=jsonv2&accept-language=idn`
+        `https://nominatim.openstreetmap.org/reverse.php?lat=${lat}&lon=${lon}&zoom=18&format=jsonv2&accept-language=idn`,
       );
       const dataJson = await location.json();
       const data = dataJson.address;
 
       const villageOrSuburb = (data.village || data.suburb || '').toLowerCase();
-      const cityDistrictOrCounty = (
-        data.city_district ||
-        data.county ||
-        ''
-      ).toLowerCase();
 
       const code = areaKeys.find((a) => {
         const areaVal = (area[a] as string)?.toLowerCase?.();
-        const splittedAreaKey = a.split('.');
-        const adm3 =
-          area[
-            `${splittedAreaKey[0]}.${splittedAreaKey[1]}.${splittedAreaKey[2]}`
-          ]?.toLowerCase?.();
 
-        return (
-          areaVal.includes(villageOrSuburb) &&
-          adm3.includes(cityDistrictOrCounty)
-        );
+        return areaVal.includes(villageOrSuburb);
       });
 
       return NextResponse.json({
@@ -54,7 +41,7 @@ export async function GET(request: NextRequest) {
         data: null,
         message: 'Failed to fetch code',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -48,7 +48,7 @@ const Weather = ({
           // `${bgColor?.[0]}`,
           // `bg-primary-${bgColor?.[1]}`,
           bgColor,
-          'transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300'
+          'transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300',
         )}
       >
         <div className='flex flex-start items-center space-x-2'>
@@ -88,7 +88,7 @@ const Weather = ({
         containerClassname={clsx(
           'min-h-80',
           `${bgColor?.[0]}`,
-          `bg-primary-${bgColor?.[1]}`
+          `bg-primary-${bgColor?.[1]}`,
         )}
       >
         <div>
@@ -117,7 +117,7 @@ const Weather = ({
           <div className='flex space-x-3 md:space-x-5 justify-center items-center mt-5 text-xs'>
             <div
               className={clsx(
-                'p-2 flex flex-col justify-center items-center space-y-1'
+                'p-2 flex flex-col justify-center items-center space-y-1',
               )}
             >
               <Droplets color='#FFFFFF' />
@@ -129,7 +129,7 @@ const Weather = ({
                 <div className='border-l border-white h-24' />
                 <div
                   className={clsx(
-                    'p-2 flex flex-col justify-center items-center space-y-1'
+                    'p-2 flex flex-col justify-center items-center space-y-1',
                   )}
                 >
                   <Compass color='#FFFFFF' />
@@ -141,7 +141,7 @@ const Weather = ({
             <div className='border-l border-white h-24' />
             <div
               className={clsx(
-                'p-2 flex flex-col justify-center items-center space-y-1'
+                'p-2 flex flex-col justify-center items-center space-y-1',
               )}
             >
               <Wind color='#FFFFFF' />

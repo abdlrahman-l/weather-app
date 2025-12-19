@@ -1,26 +1,32 @@
 'use client';
-import React, { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic';
+import React, { useEffect, useState } from 'react';
 
-import MapLocationCoordinate from '../MapLocationCoordinate';
+const MapLocationCoordinate = dynamic(
+  () => import('../MapLocationCoordinate'),
+  {
+    ssr: false,
+  },
+);
 
 type MapLocationCoordinateProps = {
-    lat: string;
-    long: string;
-}
+  lat: string;
+  long: string;
+};
 const MapLocationContainer = ({ lat, long }: MapLocationCoordinateProps) => {
-    const [isReady, setisReady] = useState(false)
+  const [isReady, setisReady] = useState(false);
 
-    useEffect(() => {
-        setisReady(true)
-    }, [])
+  useEffect(() => {
+    setisReady(true);
+  }, []);
 
-    if (!isReady) return null
+  if (!isReady) return null;
 
-    return (
-        <div className="w-100 h-100 rounded-lg overflow-hidden">
-            <MapLocationCoordinate lat={Number(lat)} long={Number(long)} />
-        </div>
-    )
-}
+  return (
+    <div className='w-100 h-100 rounded-lg overflow-hidden'>
+      <MapLocationCoordinate lat={Number(lat)} long={Number(long)} />
+    </div>
+  );
+};
 
-export default MapLocationContainer
+export default MapLocationContainer;

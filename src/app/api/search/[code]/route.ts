@@ -6,7 +6,7 @@ import regionCode from '@/constant/kode-wilayah.json';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: { code: string } },
 ) {
   const area = regionCode.DATA;
   const areaVal = area[params.code];
@@ -24,7 +24,7 @@ export async function GET(
         data: null,
         message: 'Failed to fetch area',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

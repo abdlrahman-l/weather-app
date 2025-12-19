@@ -24,7 +24,9 @@ const LottieAnimation = ({
   const [animationData, setAnimationData] = React.useState<any>(null);
 
   useEffect(() => {
-    importAnimation(setAnimationData);
+    importAnimation((data) => {
+      setAnimationData(JSON.parse(JSON.stringify(data)));
+    });
   }, [importAnimation]);
 
   const options = {

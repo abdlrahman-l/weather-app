@@ -45,7 +45,7 @@ const VerticalWeather = ({
         bgColor,
         ` text-white whitespace-nowrap`,
         isExpanded && 'min-w-[250px]',
-        'transition-all duration-700 ease-in-out overflow-hidden '
+        'transition-all duration-700 ease-in-out overflow-hidden ',
       )}
     >
       {isExpanded ? (

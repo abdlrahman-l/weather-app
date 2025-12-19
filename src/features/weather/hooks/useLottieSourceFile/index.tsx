@@ -4,7 +4,7 @@ import { weatherCodeFile, weatherCodeNightFile } from '@/constant/bmkg';
 
 const useLottieSourceFile = (
   time: string,
-  unit: keyof typeof weatherCodeFile
+  unit: keyof typeof weatherCodeFile,
 ) => {
   const hour = dayjs(time).get('hour');
   const getFileType = () => {

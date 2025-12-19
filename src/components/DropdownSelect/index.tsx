@@ -20,7 +20,7 @@ export type DropdownSelectProps = {
 export default forwardRef<HTMLInputElement, DropdownSelectProps>(
   function DropdownSelect(
     { options, defaultOption, onSelect, placeholder }: DropdownSelectProps,
-    ref
+    ref,
   ) {
     const [query, setQuery] = useState('');
 
@@ -31,7 +31,7 @@ export default forwardRef<HTMLInputElement, DropdownSelectProps>(
             option.value
               .toLowerCase()
               .replace(/\s+/g, '')
-              .includes(query.toLowerCase().replace(/\s+/g, ''))
+              .includes(query.toLowerCase().replace(/\s+/g, '')),
           );
 
     return (
@@ -118,5 +118,5 @@ export default forwardRef<HTMLInputElement, DropdownSelectProps>(
         </div>
       </Combobox>
     );
-  }
+  },
 );

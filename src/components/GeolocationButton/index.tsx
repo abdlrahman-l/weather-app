@@ -63,7 +63,7 @@ function getLocation(options = {}) {
             break;
         }
       },
-      finalOptions
+      finalOptions,
     );
   });
 }
@@ -82,7 +82,7 @@ const GeolocationButton = () => {
     queryKey: [coordinate.lat, coordinate.lon],
     queryFn: async () => {
       const res = fetch(
-        `/api/code?lat=${coordinate.lat}&lon=${coordinate.lon}`
+        `/api/code?lat=${coordinate.lat}&lon=${coordinate.lon}`,
       );
       return (await res).json();
     },
